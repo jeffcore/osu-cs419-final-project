@@ -1,0 +1,1 @@
+Testing upload using git from command line --Rittie
