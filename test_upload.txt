@@ -1,1 +1,19 @@
 Testing upload using git from command line --Rittie
+
+Documenting steps I took to upload file successfully using git from Linux command line ($=prompt).
+1. go to directory where git project directory will be located
+2. clone the git directory
+  $git clone https://github.com/jeffrix/cs419project.git
+3. go to project directory
+  $cd cs419project
+4. add the remote repository (call it 'upstream')
+  $git remote add upstream git://github.com/jeffrix/cs419project.git
+5. create file, or move file into, local git directory (i.e. cs419project)
+6. add file to git index
+  $git add test_upload.txt
+7. commit file locally
+  $git commmit -m "Rittie testing file upload"
+8. upload to team site - publish local commit to origin/master
+  $git push
+
+git prompted me for username and password when publishing to team site (step 8)
