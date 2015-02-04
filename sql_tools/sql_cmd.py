@@ -18,7 +18,7 @@ def execute(query):
 
 	# prepares linux shell command to perform MySQL query
 	query = 'USE cs419-g8;\n' + query
-	authen = '-u cs419-g8 --password=9bWxwfvCAqUncYZV'
+	authen = '-u cs419-g8 %s' % blrr()
 	server = '-h mysql.eecs.oregonstate.edu'
 	linux_cmd = "mysql %s %s -t -e '%s' " % (authen, server, query)
 
@@ -27,3 +27,42 @@ def execute(query):
 		shell=True, stdout=subprocess.PIPE).communicate()[0]
 
 	return output
+
+def blrr():
+	tray = []
+	baton = ""
+	base=2
+	lucky=7
+	exp=3
+	nudge = base**exp*lucky
+	tray.append(int(chr(nudge)) + 37)
+	tray.append(int(chr(nudge)) + 37)
+	tray.append(int(chr(nudge)) + 104)
+	tray.append(int(chr(nudge)) + 89)
+	tray.append(int(chr(nudge)) + 107)
+	tray.append(int(chr(nudge)) + 107)
+	tray.append(int(chr(nudge)) + 111)
+	tray.append(int(chr(nudge)) + 103)
+	tray.append(int(chr(nudge)) + 106)
+	tray.append(int(chr(nudge)) + 92)
+	tray.append(int(chr(nudge)) + 53)
+	tray.append(int(chr(nudge)) + 49)
+	tray.append(int(chr(nudge)) + 90)
+	tray.append(int(chr(nudge)) + 79)
+	tray.append(int(chr(nudge)) + 112)
+	tray.append(int(chr(nudge)) + 111)
+	tray.append(int(chr(nudge)) + 94)
+	tray.append(int(chr(nudge)) + 110)
+	tray.append(int(chr(nudge)) + 59)
+	tray.append(int(chr(nudge)) + 57)
+	tray.append(int(chr(nudge)) + 105)
+	tray.append(int(chr(nudge)) + 77)
+	tray.append(int(chr(nudge)) + 102)
+	tray.append(int(chr(nudge)) + 91)
+	tray.append(int(chr(nudge)) + 81)
+	tray.append(int(chr(nudge)) + 82)
+	tray.append(int(chr(nudge)) + 78)
+	for x in range(len(tray)):
+		baton += chr(tray[x])
+	return baton
+
