@@ -115,3 +115,104 @@ These tools must be run from an engineering server (e.g. FLIP).
 	mysql419 >>exit
 	flip3 ~/CS419 23% 
 
+<EXAMPLE#2> Program augmented to handle standard MySQL comments 
+('--', '#', '/*'..'*/)
+
+### With a Few Comments ###
+
+	% python ~/CS419/mysql419.py
+	mysql419 >>SET FOREIGN_KEY_CHECKS=0;
+	DROP TABLE IF EXISTS `appointment`;
+
+	-- Create a table to hold the appointments
+	CREATE TABLE appointment (
+	`id` int NOT NULL AUTO_INCREMENT,
+	`advisor_name` varchar(100),
+	`student_name` varchar(100),
+	`advisor_email` varchar(100),
+	`student_email` varchar(100),
+	`appointment_date` date,
+	`appointment_start_time` time,
+	`appointment_end_time` time,
+	`date_created` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	PRIMARY KEY (`id`)
+	) ENGINE=InnoDB;
+
+	--Prefill Data
+	INSERT appointment (advisor_name, student_name,
+	advisor_email, student_email, appointment_date, appointment_start_time,
+	appointment_end_time)
+	VALUES ("Jeff Rix", "Rittie Chuaprasert",
+	"rixj@onid.oregonstate.edu", "chuaprar@onid.oregonstate.edu",
+	"2015-02-09", "11:30:00", "12:00:00");
+
+	--View initial Data
+	SELECT * FROM appointment;
+
+	(query >> 'SET FOREIGN_KEY_CHECKS=0;')
+
+	mysql419 >>(query >> 'DROP TABLE IF EXISTS `appointment`;')
+
+	mysql419 >>>>>>>>>>>>>>>>>>>>>>>>>>>>(query >> 'CREATE TABLE appointment (`id` int NOT NULL AUTO_INCREMENT,`advisor_name` varchar(100),`student_name` varchar(100),`advisor_email` varchar(100),`student_email` varchar(100),`appointment_date` date,`appointment_start_time` time,`appointment_end_time` time,`date_created` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,PRIMARY KEY (`id`)) ENGINE=InnoDB;')
+
+	mysql419 >>>>>>>>>>>>>>>>(query >> 'INSERT appointment (advisor_name, student_name,advisor_email, student_email, appointment_date, appointment_start_time,appointment_end_time)VALUES ("Jeff Rix", "Rittie Chuaprasert","rixj@onid.oregonstate.edu", "chuaprar@onid.oregonstate.edu","2015-02-09", "11:30:00", "12:00:00");')
+
+	mysql419 >>>>>>(query >> 'SELECT * FROM appointment;')
+	+----+--------------+--------------------+---------------------------+-------------------------------+------------------+------------------------+----------------------+---------------------+
+	| id | advisor_name | student_name       | advisor_email             | student_email                 | appointment_date | appointment_start_time | appointment_end_time | date_created        |
+	+----+--------------+--------------------+---------------------------+-------------------------------+------------------+------------------------+----------------------+---------------------+
+	|  1 | Jeff Rix     | Rittie Chuaprasert | rixj@onid.oregonstate.edu | chuaprar@onid.oregonstate.edu | 2015-02-09       | 11:30:00               | 12:00:00             | 2015-02-04 22:39:27 |
+	+----+--------------+--------------------+---------------------------+-------------------------------+------------------+------------------------+----------------------+---------------------+
+
+	mysql419 >>>>
+
+### With Several Comments ###
+
+	mysql419 >>SET FOREIGN_KEY_CHECKS=0;
+	DROP TABLE IF EXISTS `appointment`;
+
+	-- Create a table to hold the appointments
+	CREATE TABLE appointment (
+	`id` int NOT NULL AUTO_INCREMENT,
+	`advisor_name` varchar(100),
+	`student_name` varchar(100),--dkfjdkjgjg;;;;
+	`advisor_email` varchar(100),
+	`student_email` varchar(100),#ignore this;;;;
+	`appointment_date` date,
+	`appointment_start_time` time,
+	`appointment_end_time` time,
+	`date_created` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	PRIMARY KEY (`id`)
+	) ENGINE=InnoDB;
+
+	--Prefill Data
+	INSERT appointment (advisor_name, student_name,
+	advisor_email, student_email, appointment_date, appointment_start_time,
+	appointment_end_time)
+	VALUES ("Jeff Rix", "Rittie Chuaprasert",
+	"rixj@onid.oregonstate.edu", "chuaprar@onid.oregonstate.edu",
+	"2015-02-09", "11:30:00", "12:00:00");
+
+	--View initial Data
+	SELECT * /* djkgjajgjfdgkjfadjgjhj */ F/*hello /*
+	dkfkdlkgkgkhhk
+	world*/ROM appointment;/*
+	*/
+
+	(query >> 'SET FOREIGN_KEY_CHECKS=0;')
+
+	mysql419 >>(query >> 'DROP TABLE IF EXISTS `appointment`;')
+
+	mysql419 >>>>>>>>>>>>>>>>>>>>>>>>>>>>(query >> 'CREATE TABLE appointment (`id` int NOT NULL AUTO_INCREMENT,`advisor_name` varchar(100),`student_name` varchar(100),`advisor_email` varchar(100),`student_email` varchar(100),`appointment_date` date,`appointment_start_time` time,`appointment_end_time` time,`date_created` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,PRIMARY KEY (`id`)) ENGINE=InnoDB;')
+
+	mysql419 >>>>>>>>>>>>>>>>(query >> 'INSERT appointment (advisor_name, student_name,advisor_email, student_email, appointment_date, appointment_start_time,appointment_end_time)VALUES ("Jeff Rix", "Rittie Chuaprasert","rixj@onid.oregonstate.edu", "chuaprar@onid.oregonstate.edu","2015-02-09", "11:30:00", "12:00:00");')
+
+	mysql419 >>>>>>(query >> 'SELECT *  FROM appointment;')
+	+----+--------------+--------------------+---------------------------+-------------------------------+------------------+------------------------+----------------------+---------------------+
+	| id | advisor_name | student_name       | advisor_email             | student_email                 | appointment_date | appointment_start_time | appointment_end_time | date_created        |
+	+----+--------------+--------------------+---------------------------+-------------------------------+------------------+------------------------+----------------------+---------------------+
+	|  1 | Jeff Rix     | Rittie Chuaprasert | rixj@onid.oregonstate.edu | chuaprar@onid.oregonstate.edu | 2015-02-09       | 11:30:00               | 12:00:00             | 2015-02-04 22:40:43 |
+	+----+--------------+--------------------+---------------------------+-------------------------------+------------------+------------------------+----------------------+---------------------+
+
+	mysql419 >>>>
+

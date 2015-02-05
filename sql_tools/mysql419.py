@@ -23,6 +23,21 @@ def gettext(prompt):
 fullcmd = ''
 cmd = gettext('mysql419 >>')
 while (cmd != 'exit'):
+	# handle cases of comment lines
+	if ('#' in cmd):			# ignore inline text after comment tag
+		comment_tag = cmd.find('#')
+		cmd = cmd[0:comment_tag]	
+	if	('--' in cmd):			# ignore inline text after comment tag
+		comment_tag = cmd.find('--')
+		cmd = cmd[0:comment_tag]	
+	while ('/*' in cmd):		# ignore text between comment tags
+		while ('*/' not in cmd):
+			cmd += gettext('')
+		comment_tag1 = cmd.find('/*')
+		comment_tag2 = cmd.find('*/') + 2
+		cmd = cmd[0:comment_tag1] + cmd[comment_tag2:]
+
+	# comment lines have been excluded
 	fullcmd += cmd
 	if ';' in fullcmd:
 		print "(query >> '" + fullcmd + "')"
