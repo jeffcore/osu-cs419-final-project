@@ -11,7 +11,7 @@ CREATE TABLE  appointment (
 	`appointment_date` date,
 	`appointment_start_time` time,
 	`appointment_end_time` time,	
-	`date_created` date,
+	`date_created` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	PRIMARY KEY (`id`)
 ) ENGINE=InnoDB;
 
