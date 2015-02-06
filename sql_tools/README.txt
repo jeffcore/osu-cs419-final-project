@@ -11,9 +11,11 @@ These tools must be run from an engineering server (e.g. FLIP).
 
 	To use this tool within another python script: 
 		import sql_cmd
-		syntax: 'sql_cmd.execute(query)' where query = MySQL query text string
+		syntax: 'sql_cmd.execute(query, borders)' where 
+			query = MySQL query text string
+			borders = (True = table borders; False = data output only) 
 		example: assigning sql_cmd result to variable sql_result:
-			sql_result = sql_cmd.execute(query)
+			sql_result = sql_cmd.execute(query, False)
 
 <Tool> mysql419.py
 
@@ -30,6 +32,20 @@ These tools must be run from an engineering server (e.g. FLIP).
 	program will execute the queries sequentially.
 
 	To EXIT, enter 'exit' at the prompt.
+
+<EXAMPLE> Below is text from using sql_cmd.py
+
+	% python
+
+	>>> my_query = 'SELECT * FROM appointment;'
+	>>> import sql_cmd
+	>>>
+	>>> sql_cmd.execute(my_query)
+	'+----+--------------+--------------------+---------------------------+-------------------------------+------------------+------------------------+----------------------+---------------------+\n| id | advisor_name | student_name       | advisor_email             | student_email                 | appointment_date | appointment_start_time | appointment_end_time | date_created        |\n+----+--------------+--------------------+---------------------------+-------------------------------+------------------+------------------------+----------------------+---------------------+\n|  1 | Jeff Rix     | Rittie Chuaprasert | rixj@onid.oregonstate.edu | chuaprar@onid.oregonstate.edu | 2015-02-09       | 11:30:00               | 12:00:00             | 2015-02-04 22:40:43 |\n|  3 | Jeff Rix     | Rittie Chuaprasert | rixj@onid.oregonstate.edu | chuaprar@onid.oregonstate.edu | 2015-02-09       | 11:30:00               | 12:00:00             | 2015-02-06 01:42:51 |\n+----+--------------+--------------------+---------------------------+-------------------------------+------------------+------------------------+----------------------+---------------------+\n'
+	>>>
+	>>> sql_cmd.execute(my_query, False)
+	'1\tJeff Rix\tRittie Chuaprasert\trixj@onid.oregonstate.edu\tchuaprar@onid.oregonstate.edu\t2015-02-09\t11:30:00\t12:00:00\t2015-02-04 22:40:43\n3\tJeff Rix\tRittie Chuaprasert\trixj@onid.oregonstate.edu\tchuaprar@onid.oregonstate.edu\t2015-02-09\t11:30:00\t12:00:00\t2015-02-06 01:42:51\n'
+	>>> 
 
 <EXAMPLE> Below is text from Linux command line session using mysql419.py
 
