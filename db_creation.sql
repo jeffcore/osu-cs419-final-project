@@ -16,7 +16,7 @@ CREATE TABLE  appointment (
 ) ENGINE=InnoDB;
 
 
---Prefill Data
+-- Prefill Data
 INSERT INTO appointment (advisor_name, student_name,
 advisor_email, student_email, appointment_date, appointment_start_time,
 appointment_end_time)
