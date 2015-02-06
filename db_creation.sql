@@ -23,3 +23,4 @@ appointment_end_time)
 VALUES ("Jeff Rix", "Rittie Chuaprasert",
 "rixj@onid.oregonstate.edu", "chuaprar@onid.oregonstate.edu",
 "2015-02-09", "11:30:00", "12:00:00");
+
