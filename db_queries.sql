@@ -1,4 +1,4 @@
-INSERT appointment (advisor_name, student_name,
+INSERT INTO appointment (advisor_name, student_name,
 advisor_email, student_email, appointment_date, appointment_start_time,
 appointment_end_time)
 VALUES ("Jeff Rix", "Rittie Chuaprasert",
