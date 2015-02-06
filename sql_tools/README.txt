@@ -138,7 +138,7 @@ These tools must be run from an engineering server (e.g. FLIP).
 	PRIMARY KEY (`id`)
 	) ENGINE=InnoDB;
 
-	--Prefill Data
+	-- Prefill Data
 	INSERT appointment (advisor_name, student_name,
 	advisor_email, student_email, appointment_date, appointment_start_time,
 	appointment_end_time)
@@ -146,7 +146,7 @@ These tools must be run from an engineering server (e.g. FLIP).
 	"rixj@onid.oregonstate.edu", "chuaprar@onid.oregonstate.edu",
 	"2015-02-09", "11:30:00", "12:00:00");
 
-	--View initial Data
+	-- View initial Data
 	SELECT * FROM appointment;
 
 	(query >> 'SET FOREIGN_KEY_CHECKS=0;')
@@ -185,7 +185,7 @@ These tools must be run from an engineering server (e.g. FLIP).
 	PRIMARY KEY (`id`)
 	) ENGINE=InnoDB;
 
-	--Prefill Data
+	-- Prefill Data
 	INSERT appointment (advisor_name, student_name,
 	advisor_email, student_email, appointment_date, appointment_start_time,
 	appointment_end_time)
@@ -193,7 +193,7 @@ These tools must be run from an engineering server (e.g. FLIP).
 	"rixj@onid.oregonstate.edu", "chuaprar@onid.oregonstate.edu",
 	"2015-02-09", "11:30:00", "12:00:00");
 
-	--View initial Data
+	-- View initial Data
 	SELECT * /* djkgjajgjfdgkjfadjgjhj */ F/*hello /*
 	dkfkdlkgkgkhhk
 	world*/ROM appointment;/*

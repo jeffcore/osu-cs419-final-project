@@ -27,7 +27,8 @@ while (cmd != 'exit'):
 	if ('#' in cmd):			# ignore inline text after comment tag
 		comment_tag = cmd.find('#')
 		cmd = cmd[0:comment_tag]	
-	if	('--' in cmd):			# ignore inline text after comment tag
+	if	('-- ' in cmd) or ('--\n' in cmd) or	\
+			('--\t' in cmd):	# ignore inline text after comment tag
 		comment_tag = cmd.find('--')
 		cmd = cmd[0:comment_tag]	
 	while ('/*' in cmd):		# ignore text between comment tags
