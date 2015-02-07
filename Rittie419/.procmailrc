@@ -1,0 +1,32 @@
+# A default .procmailrc file
+# See http://engr.oregonstate.edu/computing/email/90
+
+# Include the standard spam filter
+INCLUDERC=/usr/local/etc/procmail/standard.rc
+
+####################################################
+# (Optionally) Add your own rules after this line
+####################################################
+
+:0 fW:
+* ^From[: ].*do.not.reply@engr.orst.edu
+* ^Subject:.*Advising Signup
+| python ~/CS419/procfilter.py
+
+:0
+* ^From[: ].*do.not.reply@engr.orst.edu
+* ^Subject:.*Advising Signup
+CS419/CS419mail/. CS419/CS419mail/newmail.txt
+
+:0 cB
+* ^BEGIN:VCALENDAR
+CS419/CS419mail/ical/.
+
+# for other mail, forward everything to OSU gmail
+:0
+* ^[a-zA-Z]+
+! chuaprar@onid.oregonstate.edu
+
+:0
+CS419/CS419mail/spam/.
+

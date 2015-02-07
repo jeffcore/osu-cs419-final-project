@@ -1,0 +1,119 @@
+From rittie@comcast.net  Thu Feb  5 02:46:44 2015
+Return-Path: <rittie@comcast.net>
+Received: from relay1.nws.oregonstate.edu (relay1.nws.oregonstate.edu [128.193.15.37])
+	by zen.engr.oregonstate.edu (8.14.4/8.14.4) with ESMTP id t15Akijd015401
+	for <chuaprar@engr.orst.edu>; Thu, 5 Feb 2015 02:46:44 -0800
+Received: from localhost (localhost [127.0.0.1])
+	by relay1.nws.oregonstate.edu (Postfix) with ESMTP id 11DD934068C
+	for <chuaprar@engr.orst.edu>; Thu,  5 Feb 2015 02:46:44 -0800 (PST)
+X-Virus-Scanned: Debian amavisd-new at relay1.nws.oregonstate.edu
+X-Spam-Flag: NO
+X-Spam-Score: -0.107
+X-Spam-Level:
+X-Spam-Status: No, score=-0.107 tagged_above=-999 required=5
+	tests=[DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1,
+	FREEMAIL_FROM=0.001, HTML_MESSAGE=0.001, MIME_HTML_MOSTLY=0.001,
+	RCVD_IN_DNSWL_NONE=-0.0001, SPF_PASS=-0.001, TVD_SPACE_RATIO=0.001,
+	T_RP_MATCHES_RCVD=-0.01] autolearn=disabled
+Received: from relay1.nws.oregonstate.edu ([127.0.0.1])
+	by localhost (relay1.nws.oregonstate.edu [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id zMP9oMg5nJ22 for <chuaprar@engr.orst.edu>;
+	Thu,  5 Feb 2015 02:46:37 -0800 (PST)
+Received: from resqmta-po-06v.sys.comcast.net (resqmta-po-06v.sys.comcast.net [96.114.154.165])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by relay1.nws.oregonstate.edu (Postfix) with ESMTPS id 548A634057F
+	for <chuaprar@engr.orst.edu>; Thu,  5 Feb 2015 02:46:36 -0800 (PST)
+Received: from resomta-po-12v.sys.comcast.net ([96.114.154.236])
+	by resqmta-po-06v.sys.comcast.net with comcast
+	id oamc1p00256HXL001amcmP; Thu, 05 Feb 2015 10:46:36 +0000
+Received: from LenovoHorizon ([IPv6:2601:7:2000:771:81f6:b84d:f6d2:aeba])
+	by resomta-po-12v.sys.comcast.net with comcast
+	id oamb1p00C28QZ3s01amcdB; Thu, 05 Feb 2015 10:46:36 +0000
+Reply-To: <rac42@cornell.edu>
+From: "Rittie Chuaprasert" <rittie@comcast.net>
+To: <chuaprar@engr.orst.edu>
+Subject: hello2
+Date: Thu, 5 Feb 2015 02:46:37 -0800
+Message-ID: <008901d04131$04ba8540$0e2f8fc0$@comcast.net>
+MIME-Version: 1.0
+Content-Type: multipart/alternative;
+	boundary="----=_NextPart_000_008A_01D040ED.F6982FA0"
+X-Mailer: Microsoft Outlook 15.0
+Thread-Index: AdBBMQIiNiSNot2OSLm9337SV3Stjw==
+Content-Language: en-us
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=comcast.net;
+	s=q20140121; t=1423133196;
+	bh=+idc3PGSn/NGvkSXVEZNzZcCEM/F7om/qXgEuGHkhG4=;
+	h=Received:Received:Reply-To:From:To:Subject:Date:Message-ID:
+	 MIME-Version:Content-Type;
+	b=maySmchJTLN9RdHA6CVWn8Ba5hAwm93EDo9ShcYXBxUlGksJ/EwYAyJl8K33/9xZp
+	 AWN+srCb9NiZQM2SLV0KABWfV4HHAa2i7D1XNcbpWPxSp07JCHHkNQYp/88rtaLdc/
+	 m7MqaEByVjYRmvDx1Z6OMCqzd6nq8GWkBO4DchTbREbYOF6Czg2Nw4R4CXlKmMPIEI
+	 KsRc/i9kQI4qlRJ3VYcnuzw2Cf8ALRQnsguPB2MjjHrOS6ccMsF3FrxTMiIgcLkB6W
+	 SVb2MG8rN1jP1NnfRXkob6zNg+mztYCdLySeOc2s2LYE7d0vGwUq0nkr7rT5Sr42G8
+	 POGotlUX+w2Bw==
+
+This is a multipart message in MIME format.
+
+------=_NextPart_000_008A_01D040ED.F6982FA0
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+
+jjkgkfjgj
+
+
+------=_NextPart_000_008A_01D040ED.F6982FA0
+Content-Type: text/html;
+	charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
+
+<html xmlns:v=3D"urn:schemas-microsoft-com:vml" =
+xmlns:o=3D"urn:schemas-microsoft-com:office:office" =
+xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
+xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" =
+xmlns=3D"http://www.w3.org/TR/REC-html40"><head><META =
+HTTP-EQUIV=3D"Content-Type" CONTENT=3D"text/html; =
+charset=3Dus-ascii"><meta name=3DGenerator content=3D"Microsoft Word 15 =
+(filtered medium)"><style><!--
+/* Font Definitions */
+@font-face
+	{font-family:Calibri;
+	panose-1:2 15 5 2 2 2 4 3 2 4;}
+/* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0in;
+	margin-bottom:.0001pt;
+	font-size:11.0pt;
+	font-family:"Calibri",sans-serif;}
+a:link, span.MsoHyperlink
+	{mso-style-priority:99;
+	color:#0563C1;
+	text-decoration:underline;}
+a:visited, span.MsoHyperlinkFollowed
+	{mso-style-priority:99;
+	color:#954F72;
+	text-decoration:underline;}
+span.EmailStyle17
+	{mso-style-type:personal-compose;
+	font-family:"Calibri",sans-serif;
+	color:windowtext;}
+.MsoChpDefault
+	{mso-style-type:export-only;
+	font-family:"Calibri",sans-serif;}
+@page WordSection1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.0in 1.0in 1.0in;}
+div.WordSection1
+	{page:WordSection1;}
+--></style><!--[if gte mso 9]><xml>
+<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
+</xml><![endif]--><!--[if gte mso 9]><xml>
+<o:shapelayout v:ext=3D"edit">
+<o:idmap v:ext=3D"edit" data=3D"1" />
+</o:shapelayout></xml><![endif]--></head><body lang=3DEN-US =
+link=3D"#0563C1" vlink=3D"#954F72"><div class=3DWordSection1><p =
+class=3DMsoNormal>jjkgkfjgj<o:p></o:p></p></div></body></html>
+------=_NextPart_000_008A_01D040ED.F6982FA0--
+

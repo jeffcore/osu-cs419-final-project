@@ -1,0 +1,59 @@
+From chuaprar@onid.orst.edu  Thu Feb  5 03:06:25 2015
+Return-Path: <chuaprar@onid.orst.edu>
+Received: from flip2.engr.oregonstate.edu (flip2.engr.oregonstate.edu [128.193.54.7])
+	by zen.engr.oregonstate.edu (8.14.4/8.14.4) with ESMTP id t15B6Pri017428
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+	for <chuaprar@engr.orst.edu>; Thu, 5 Feb 2015 03:06:25 -0800
+Message-Id: <201502051106.t15B6Pri017428@zen.engr.oregonstate.edu>
+Content-Type: multipart/mixed; boundary="===============0384980457473701293=="
+MIME-Version: 1.0
+Reply-To: Rittie <chuaprar@onid.orst.edu>
+Date: Thu, 05 Feb 2015 03:06:25 -0800
+Subject: pyICSParser invite20150206T030625Z
+From: Rittie <chuaprar@onid.orst.edu>
+To: chuaprar@engr.orst.edu
+
+--===============0384980457473701293==
+Content-Type: multipart/alternative;
+	boundary="===============6661638243457284931=="
+MIME-Version: 1.0
+
+--===============6661638243457284931==
+MIME-Version: 1.0
+Content-Type: text/calendar; method="CANCEL"; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+
+BEGIN:VCALENDAR
+PRODID:pyICSParser
+VERSION:2.0
+CALSCALE:GREGORIAN
+METHOD:CANCEL
+BEGIN:VEVENT
+DTSTART:20150206T030625Z
+DTEND:20150206T040625Z
+DTSTAMP:20150205T030625Z
+ORGANIZER;CN=Rittie Chuaprasert:mailto:chuaprar@engr.orst.edu
+UID:FIXMEUID20150205T030212Z
+ATTENDEE;CUTYPE=INDIVIDUAL;ROLE=REQ PARTICIPANT;PARTSTAT=ACCEPTED;RSVP=TRUE
+ ;CN=chuaprar@engr.orst.edu;X-NUM-GUESTS=0:
+ mailto:chuaprar@engr.orst.edu
+CREATED:20150205T030625Z
+DESCRIPTION: test invitation from pyICSParser
+LAST-MODIFIED:20150205T030625Z
+LOCATION:
+SEQUENCE:0
+STATUS:CANCELLED
+SUMMARY:test 20150206 @ 03:06
+TRANSP:OPAQUE
+END:VEVENT
+END:VCALENDAR
+
+--===============6661638243457284931==
+Content-Type: text/html; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+
+Email body visible in the invite of outlook and outlook.com but not google calendar
+--===============6661638243457284931==--
+--===============0384980457473701293==--
+
