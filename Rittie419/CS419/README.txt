@@ -13,6 +13,9 @@ get_email.py - given OSU student name, finds the student's email address
 mysql419.py - CLI tool to interface with cs419-g8 database (similar to MySQL via CLI)
 procfilter.py - receives plain text email from .procmailrc and completes scheduling tasks
 runtest.py - contains tests of various project components / sub-systems
+send_conf_email.py - sends appropriate confirmation email to student, either a CONFIRM or CANCEL
 sql_cmd.py - executes MySQL queries in cs419-g8 database
+
+Makefile: currently just removes *.pyc files with 'make clean'
 
 CS419mail (~/CS419/CS419mail) directory: stores diagnostic information about application runs.
