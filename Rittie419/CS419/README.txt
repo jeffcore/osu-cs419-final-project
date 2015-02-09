@@ -1,7 +1,7 @@
 This folder ('CS419') is the main hub for CS419-W15-Group8 PROJECT: Simplified Advising Scheduling.
 It contains all the .py source code for the project.
 
-To be application to be operational, this folder must reside on engr.oregonstate.edu in the user's main directory ('~/') along with ~/.procmailrc file, so this directory path is ~/CS419.
+For the application to be operational, this folder must reside on engr.oregonstate.edu in the user's main directory ('~/') along with ~/.procmailrc file, so this directory path is ~/CS419.
 
 Description of modules:
 add_appt.py - sends plain text email in format of advisor system
