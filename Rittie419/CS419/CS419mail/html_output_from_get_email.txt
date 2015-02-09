@@ -1,0 +1,108 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<title>Online Directory, Oregon State University</title>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<meta name="robots" content="NONE" />
+	<style type="text/css" media="screen">
+		/* elements */
+		a { color:#c30; }
+		a:hover { color:#00f; }
+		body { margin:0; padding:0; }
+		form { margin:0; padding:0; }
+		h1 { color:#c50; font-size:1.4em; margin:0; padding:0; }
+		h2 { color:#363; font-size:1.2em; border-bottom:1px solid #eee; margin:0; padding:.5em; }
+		h3 { font-size:1em; margin:0; padding:0; }
+
+		/* classes */
+		.aff { font-style:italic;	}
+		.button { background:#ccc; color:#000; cursor:pointer; }
+		.button:active { background:#eee; border:2px inset #666; color:#000; cursor:pointer; }
+		.button:hover { background:#eee; color:#000; cursor:pointer; }
+		.dept { }
+		.email { }
+		.ph { font-weight:bold; }
+		.record { border-bottom:1px solid #eee; padding:1em; }
+		.record h3 { font-size:1em; margin:0; padding:0; }
+		.record ul { list-style-type:none; margin:0; padding:0; }
+		.record ul li { }
+
+		/* containers */
+		#footer { background:#fda; border-top:1px solid #999; border-bottom:1px solid #999; font-size:.8em; }
+		#footer p { margin:0; padding:.5em;}
+		#header { background:#fda; border-top:1px solid #999; padding:.2em .5em;}
+		#osu { background:#000; margin:0; padding:0; }
+		#osu img { border:none; }
+		#search { font-size:.8em; }
+		#search p { margin:0; padding:0; }
+		#questions { background:#eee; border-top:1px solid #999; font-size:.8em; margin:0; padding:1em .5em; }
+		#questions h2 { border:none; color:#000; margin:0; padding:0 0 0 .5em; }
+		#questions ul { margin:0; }
+		#records { border-top:1px solid #999; }
+	</style>
+	<script type="text/javascript">
+	// <!--
+		function search_focus() { document.getElementById('cn').focus(); }
+	// -->
+	</script>
+</head>
+<body onload="search_focus();">
+<div id="osu">
+	<a href="http://oregonstate.edu/"><img src="http://oregonstate.edu/u_central/images/blackWordmark.gif" alt="Oregon State University" /></a>
+</div>
+		
+<div id="header">
+	<h1>Online Directory</h1>
+	<form id="search" method="get" action="/">
+		<p>
+			<input type="hidden" name="type" value="search" />
+			<input type="text" name="cn" id="cn" value="Chuaprasert Rittie" size="35" />
+			<input type="submit" value="Name Search" class="button" /><br />
+
+			<a href="/?type=advanced">Advanced Search</a>
+		</p>
+	</form>
+</div>
+	<!-- Filter: (&(objectclass=person)(&(|(cn=*Chuaprasert*)(displayname=*Chuaprasert*))(|(cn=*Rittie*)(displayname=*Rittie*)))) -->
+
+<div id="records">
+  <div class="record">
+    <dl>
+	
+    <dt><b>Full Name</b></dt>
+    <dd>Chuaprasert, Rittie</dd>
+			
+    <dt><b>Primary Affiliation</b></dt>
+    <dd>Student</dd>
+			
+    <dt><b>Department</b></dt>
+    <dd>Computer Science</dd>
+			
+    <dt><b>Email Address</b></dt>
+    <dd><a href="mailto:chuaprar&#064;onid&#046;orst&#046;edu">chuaprar&#064;onid&#046;orst&#046;edu</a></dd>
+			
+    <dt><b>ONID Username</b></dt>
+    <dd>chuaprar</dd>
+			
+    </dl>
+  </div>
+</div>
+	 
+<div id="questions">
+	<h2>Common Questions</h2>
+	<ul>
+		<li><a href="http://oregonstate.edu/main/campus-online-directory">How do I correct errors in my directory information?</a></li>
+		<li><a href="http://oregonstate.edu/helpdocs/onid/connecting/email/clients">How do I use the OSU Online Directory as an address book in my email client?</a></li>
+	</ul>
+</div>
+<div id="footer">
+	<p>
+		<a href="http://oregonstate.edu">Oregon State University</a>
+		 | <a href="http://onid.oregonstate.edu">ONID home page</a>
+		 | <a href="http://oregonstate.edu/main/about/disclaimer">Disclaimer</a> 
+	</p>
+</div>
+</body>
+</html>
+	

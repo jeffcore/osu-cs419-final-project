@@ -1,0 +1,66 @@
+From Chuaprasert@engr.orst.edu  Sat Feb  7 18:41:05 2015
+Return-Path: <Chuaprasert@engr.orst.edu>
+Received: from flip3.engr.oregonstate.edu (flip3.engr.oregonstate.edu [128.193.54.10])
+	by zen.engr.oregonstate.edu (8.14.4/8.14.4) with ESMTP id t182f4El014302
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+	for <chuaprar@engr.orst.edu>; Sat, 7 Feb 2015 18:41:05 -0800
+Message-Id: <201502080241.t182f4El014302@zen.engr.oregonstate.edu>
+Content-Type: multipart/mixed; boundary="===============6718436991843000283=="
+MIME-Version: 1.0
+Reply-To: Chuaprasert@engr.orst.edu, Rittie <chuaprar@engr.orst.edu>
+Date: Sat, 07 Feb 2015 18:41:04 -0800
+Subject: Advisor Appointment with STUDENT
+From: Chuaprasert@engr.orst.edu, Rittie <chuaprar@engr.orst.edu>
+To: chuaprar@engr.orst.edu
+
+--===============6718436991843000283==
+Content-Type: multipart/alternative;
+	boundary="===============6343158213942658024=="
+MIME-Version: 1.0
+
+--===============6343158213942658024==
+MIME-Version: 1.0
+Content-Type: text/calendar; method="CANCEL"; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+
+BEGIN:VCALENDAR
+PRODID:pyICSParser
+VERSION:2.0
+CALSCALE:GREGORIAN
+METHOD:CANCEL
+BEGIN:VEVENT
+DTSTART:20150310T133000
+DTEND:20150310T144500
+DTSTAMP:20150207T184104
+ORGANIZER;CN=Chuaprasert, Rittie:mailto:chuaprar@engr.orst.edu
+UID:FIXMEUIDrixj@onid.orst.edu::2015-03-10::13:30
+ATTENDEE;CUTYPE=INDIVIDUAL;ROLE=REQ PARTICIPANT;PARTSTAT=ACCEPTED;RSVP=TRUE
+ ;CN=chuaprar@engr.orst.edu;X-NUM-GUESTS=0:
+ mailto:chuaprar@engr.orst.edu
+CREATED:20150207T184104
+DESCRIPTION: Advisor Appointment with STUDENT
+LAST-MODIFIED:20150207T184104
+LOCATION:
+SEQUENCE:0
+STATUS:CANCELLED
+SUMMARY:Advisor Signup with Chuaprasert, Rittie confirmed for STUDENT
+TRANSP:OPAQUE
+END:VEVENT
+END:VCALENDAR
+
+--===============6343158213942658024==
+Content-Type: text/html; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+
+
+	Advising Signup with Chuaprasert, Rittie confirmed for STUDENT
+
+	Date: Tuesday, March 10, 2015
+
+	Time: 01:30PM - 02:45PM
+
+	
+--===============6343158213942658024==--
+--===============6718436991843000283==--
+

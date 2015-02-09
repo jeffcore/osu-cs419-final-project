@@ -1,0 +1,87 @@
+From do.not.reply@engr.orst.edu  Sun Feb  8 18:37:12 2015
+Return-Path: <do.not.reply@engr.orst.edu>
+Received: from flip1.engr.oregonstate.edu (flip1.engr.oregonstate.edu [128.193.54.226])
+	by zen.engr.oregonstate.edu (8.14.4/8.14.4) with ESMTP id t192bCiY014300
+	for <chuaprar@engr.orst.edu>; Sun, 8 Feb 2015 18:37:12 -0800
+Date: Sun, 8 Feb 2015 18:37:12 -0800
+Message-Id: <201502090237.t192bCiY014300@zen.engr.oregonstate.edu>
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+From: do.not.reply@engr.orst.edu
+To: REDACTED@engr.orst.edu, chuaprar@engr.orst.edu
+Cc: 
+Subject: Advising Signup Cancellation
+
+
+	Advising Signup with Chuaprasert, Rittie CANCELLED
+	Name: REDACTED
+	Email: REDACTED@engr.orst.edu
+	Date: Tuesday, March 10th, 2015
+	Time: 10:30AM - 11:45AM
+
+
+	Please contact support@engr.oregonstate.edu if you experience problems
+	
+
+
+		------------------------------
+2015-03-10
+raw_tim '10:30AM' am_pm 'AM'
+10:30
+raw_tim '11:45AM' am_pm 'AM'
+11:45
+
+		DELETE FROM 'temp' WHERE
+			('appointment_date'="2015-03-10" AND 'appointment_start_time'="10:30");
+	
+
++----+---------------------+--------------------+---------------------------+-------------------------------+------------------+------------------------+----------------------+---------------------+
+| id | advisor_name        | student_name       | advisor_email             | student_email                 | appointment_date | appointment_start_time | appointment_end_time | date_created        |
++----+---------------------+--------------------+---------------------------+-------------------------------+------------------+------------------------+----------------------+---------------------+
+|  2 | Jeff Rix999         | Rittie Chuaprasert | rixj@onid.oregonstate.edu | chuaprar@onid.oregonstate.edu | 2015-02-09       | 12:30:00               | 12:40:00             | 2015-02-06 19:00:16 |
+|  8 | Jeff Rix999         | Rittie Chuaprasert | rixj@onid.oregonstate.edu | chuaprar@onid.oregonstate.edu | 2015-02-10       | 11:30:00               | 13:00:00             | 2015-02-07 03:33:01 |
+|  9 | Jeff Rix999         | Rittie Chuaprasert | rixj@onid.oregonstate.edu | chuaprar@onid.oregonstate.edu | 2015-02-11       | 09:30:00               | 09:45:00             | 2015-02-07 03:34:32 |
+| 12 | Jeff Rix999         | Rittie Chuaprasert | rixj@onid.oregonstate.edu | chuaprar@onid.oregonstate.edu | 2015-02-09       | 11:30:00               | 11:45:00             | 2015-02-07 03:42:35 |
+| 22 | Chuaprasert, Rittie | Rix, Jeffrey Allan | chuaprar@engr.orst.edu    | rixj@onid.orst.edu            | 2015-03-10       | 13:30:00               | 14:45:00             | 2015-02-08 17:07:51 |
++----+---------------------+--------------------+---------------------------+-------------------------------+------------------+------------------------+----------------------+---------------------+
+
+Tuesday, March 10, 2015  10:30AM
+Tuesday, March 10, 2015  11:45AM
+unique ID: rixj@onid.orst.edu::2015-03-10::10:30
+		------------------------------
+Chuaprasert, Rittie
+Rix, Jeffrey Allan
+chuaprar@engr.orst.edu
+rixj@onid.orst.edu
+2015-03-10
+10:30
+11:45
+		------------------------------
+Chuaprasert, Rittie
+Tuesday, March 10, 2015
+10:30AM
+11:45AM
+
+	Advising Signup with Chuaprasert, Rittie CANCELLED
+	Date: Tuesday, March 10, 2015
+	Time: 10:30AM - 11:45AM
+	
+From nobody Sun Feb  8 18:37:13 2015
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+From: do.not.reply@engr.orst.edu
+To: REDACTED@engr.orst.edu, rixj@onid.orst.edu
+Cc: 
+Subject: STUDENT NOTICE: Advising Signup with Chuaprasert, Rittie CANCELLED
+
+	Rix, Jeffrey Allan
+	Advising Signup with Chuaprasert, Rittie CANCELLED
+	Date: Tuesday, March 10th, 2015
+	Time: 10:30AM - 11:45AM
+
+
+	Please contact support@engr.oregonstate.edu if you experience problems
+	
+
