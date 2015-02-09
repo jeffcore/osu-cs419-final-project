@@ -1,21 +1,20 @@
-From do.not.reply@engr.orst.edu  Sat Feb  7 07:31:31 2015
+From do.not.reply@engr.orst.edu  Sun Feb  8 18:42:36 2015
 Return-Path: <do.not.reply@engr.orst.edu>
-Received: from flip3.engr.oregonstate.edu (flip3.engr.oregonstate.edu [128.193.54.10])
-	by zen.engr.oregonstate.edu (8.14.4/8.14.4) with ESMTP id t17FVVrW017807
-	for <chuaprar@engr.orst.edu>; Sat, 7 Feb 2015 07:31:31 -0800
-Date: Sat, 7 Feb 2015 07:31:31 -0800
-Message-Id: <201502071531.t17FVVrW017807@zen.engr.oregonstate.edu>
+Received: from flip1.engr.oregonstate.edu (flip1.engr.oregonstate.edu [128.193.54.226])
+	by zen.engr.oregonstate.edu (8.14.4/8.14.4) with ESMTP id t192gaWp014839
+	for <chuaprar@engr.orst.edu>; Sun, 8 Feb 2015 18:42:36 -0800
+Date: Sun, 8 Feb 2015 18:42:36 -0800
+Message-Id: <201502090242.t192gaWp014839@zen.engr.oregonstate.edu>
 Content-Type: text/plain; charset="us-ascii"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 7bit
 From: do.not.reply@engr.orst.edu
 To: REDACTED@engr.orst.edu, chuaprar@engr.orst.edu
 Cc: 
-Subject: Advising Signup with Chuaprasert, Rittie confirmed for Rix,
-	Jeffrey Allan
+Subject: Advising Signup with Advisor Rittie confirmed for Chuaprasert, Rittie
 
 
-	Advising Signup with Chuaprasert, Rittie confirmed
+	Advising Signup with Advisor Rittie confirmed
 	Name: REDACTED
 	Email: REDACTED@engr.orst.edu
 	Date: Tuesday, March 10th, 2015

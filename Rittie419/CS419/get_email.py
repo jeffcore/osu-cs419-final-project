@@ -70,7 +70,9 @@ def get_search_url(rawname):
 def get_html_searchresult(url):
 	linux_cmd = 	'(curl -s "' + url + '")'	# gets entire search html
 	#linux_cmd +=	'| (grep "mailto:")'		# filters on lines with 'mailto:'
-	linux_cmd +=	'| (tee ./output.txt)'		# outputs cmd result to text file
+	
+	# outputs cmd result to text file
+	linux_cmd +=	'| (tee ~/CS419/CS419mail/html_output_from_get_email.txt)'
 	if fyi_messages_on:
 		print 'linux cmd:\t', linux_cmd
 	## this would be ideal but is new for python 2.7; OSU uses 2.6.6 :(

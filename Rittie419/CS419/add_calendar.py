@@ -33,11 +33,6 @@ def add_calendar(
 		attendee += " mailto:"+att+CRLF
 
 	# set calendar time signatures
-#	ddtstart = datetime.datetime.now()
-#	dtoff = datetime.timedelta(days = 1)
-#	dur = datetime.timedelta(hours = 1)
-#	ddtstart = ddtstart +dtoff
-#	dtend = ddtstart + dur
 	dtstamp = datetime.now().strftime("%Y%m%dT%H%M%S")
 	dtstart = dt_start.strftime("%Y%m%dT%H%M%S")
 	dtend = dt_end.strftime("%Y%m%dT%H%M%S")
@@ -47,7 +42,7 @@ def add_calendar(
 
 	# construct calendar item
 	ical = "BEGIN:VCALENDAR"+CRLF
-	ical+= "PRODID:pyICSParser"+CRLF
+	ical+= "PRODID:CS419ADVISORPROJECT"+CRLF
 	ical+= "VERSION:2.0"+CRLF
 	ical+= "CALSCALE:GREGORIAN"+CRLF
 	ical+= "METHOD:REQUEST"+CRLF
@@ -62,8 +57,7 @@ def add_calendar(
 	ical+= "LOCATION:"+CRLF
 	ical+= "SEQUENCE:0"+CRLF
 	ical+= "STATUS:CONFIRMED"+CRLF
-	ical+= "SUMMARY:Advisor Appointment with %s %s" % (stud, 
-		dt_start.strftime("%Y%m%d @ %H:%M"))
+	ical+= "SUMMARY:Advisor Signup with %s confirmed for %s" % (adv, stud)+CRLF
 	ical+= "TRANSP:OPAQUE"+CRLF
 	ical+= "END:VEVENT"+CRLF
 	ical+= "END:VCALENDAR"+CRLF
@@ -75,11 +69,11 @@ def add_calendar(
 	msg['Subject'] = "Advisor Appointment with %s" % (stud)
 	msg['From'] = fro
 	msg['To'] = ",".join(attendees)
-	eml_body = 	body = dt_start.strftime('''
+	eml_body = 	body = '''
 	Advising Signup with %s confirmed for %s
 	Date: %s
 	Time: %s - %s
-	''' % (adv, stud, datetxt, starttxt, endtxt))
+	''' % (adv, stud, datetxt, starttxt, endtxt)
 
 	# declare multipart structure and content info
 	msgAlternative = MIMEMultipart('alternative')

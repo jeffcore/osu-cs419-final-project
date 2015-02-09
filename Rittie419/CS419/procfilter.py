@@ -11,7 +11,8 @@ proc
 import sys
 import email
 from datetime import datetime
-import get_email, db_funcs, add_calendar
+import get_email, add_calendar, drop_calendar, send_conf_email
+import db_funcs
 from db_funcs import view_appt, add_appt, drop_appt
 DEMARC_KEY = 'Name: REDACTED'
 
@@ -36,6 +37,76 @@ def main():
 		handle_add(email_msg)
 
 # ========================================================== #
+def handle_drop(msg):
+
+	print msg
+	print '\t\t------------------------------'
+
+	# extract necessary data from email message
+	db_adv = get_db_advisor_drop(msg)
+	db_adv_email = get_db_advisor_email(msg)
+	db_date = get_db_date(msg)
+	db_start = get_db_starttime(msg)
+	db_end = get_db_endtime(msg)
+	db_stud = db_funcs.get_student(db_date, db_start)
+
+	# retrieve uid from database and drop appointment
+	uid = db_funcs.drop_appt(db_date, db_start)
+
+	tag = uid.find('::')
+	db_stud_email = uid[:tag]
+
+	# prepare datetime info
+	dt_start = get_dt(db_date, db_start)
+	dt_end = get_dt(db_date, db_end)
+
+	print dt_start.strftime("%A, %B %d, %Y  %I:%M%p")
+	print dt_end.strftime("%A, %B %d, %Y  %I:%M%p")
+	print "unique ID: %s" % uid
+
+	#	(FOR TESTING) store the orig plain text email
+	f = open('CS419/CS419mail/proc_drop_output.txt', 'w')
+	f.write(msg)
+	f.close()
+
+	#	(FOR TESTING) store email and database field data 
+	print '\t\t------------------------------'
+	print '%s\n%s\n%s\n%s\n%s\n%s\n%s' % (db_adv, db_stud,
+		db_adv_email, db_stud_email, db_date, db_start, db_end)
+	print '\t\t------------------------------'
+
+	# send Outlook calendar invite to advisor
+	drop_calendar.drop_calendar(db_adv, db_stud,
+		db_adv_email, dt_start, dt_end, uid)
+
+	# send confirmation email to student
+	send_conf_email.main(db_adv, db_stud, db_stud_email, 
+		dt_start, dt_end, 'CANCELLED')
+
+	return
+
+def get_db_advisor_drop(msg):
+	key1 = 'Advising Signup with'
+	key2 = 'CANCELLED'
+	advisor = findtext(msg, key1, key2)
+	return advisor
+# -------------------------------------------------- #
+	'  def get_db_advisor_email() is in handle_add() section '
+	'  def get_db_date() is in handle_add() section '
+	'  def get_db_starttime() is in handle_add() section '
+	'  def get_db_endtime() is in handle_add() section '
+# -------------------------------------------------- #
+
+def get_dt(db_date, db_time):
+	y = int(db_date[0:4])
+	m = int(db_date[5:7])
+	d = int(db_date[8:10])
+	hour = int(db_time[0:2])
+	mins = int(db_time[3:5])
+	dt = datetime(y, m, d, hour, mins)
+	return dt
+
+# ========================================================== #
 # -------------------------------------------------- #
 '''
 			INSERT INTO %s (
@@ -53,7 +124,7 @@ def handle_add(msg):
 	print '\t\t------------------------------'
 
 	# extract necessary data from email message
-	db_adv = get_db_advisor(msg)
+	db_adv = get_db_advisor_add(msg)
 	db_stud = get_db_student(msg)
 	db_adv_email = get_db_advisor_email(msg)
 	db_stud_email = get_db_student_email(db_stud)
@@ -62,22 +133,15 @@ def handle_add(msg):
 	db_end = get_db_endtime(msg)
 	uid = '%s::%s::%s' % (db_stud_email, db_date, db_start)
 
-	y = int(db_date[0:4])
-	m = int(db_date[5:7])
-	d = int(db_date[8:10])
-	hour = int(db_start[0:2])
-	mins = int(db_start[3:5])
-#	print y, m, d
-#	print hour, mins
-	dt_start = datetime(y, m, d, hour, mins)
-
-	hour = int(db_end[0:2])
-	mins = int(db_end[3:5])
-	dt_end = datetime(y, m, d, hour, mins)
+	# prepare datetime info
+	dt_start = get_dt(db_date, db_start)
+	dt_end = get_dt(db_date, db_end)
 
 	print dt_start.strftime("%A, %B %d, %Y  %I:%M%p")
 	print dt_end.strftime("%A, %B %d, %Y  %I:%M%p")
+	print "unique ID: %s" % uid
 
+	#	(FOR TESTING) store the orig plain text email
 	f = open('CS419/CS419mail/proc_add_output.txt', 'w')
 	f.write(msg)
 	f.close()
@@ -97,11 +161,12 @@ def handle_add(msg):
 		db_adv_email, dt_start, dt_end, uid)
 
 	# send confirmation email to student
-
+	send_conf_email.main(db_adv, db_stud, db_stud_email, 
+		dt_start, dt_end, 'CONFIRMED')
 
 	return
 # -------------------------------------------------- #
-def get_db_advisor(msg):
+def get_db_advisor_add(msg):
 	key1 = 'Advising Signup with'
 	key2 = 'confirmed'
 	advisor = findtext(msg, key1, key2)
@@ -136,6 +201,7 @@ def get_db_student_email(student):
 	print emailaddr
 	return emailaddr
 # -------------------------------------------------- #
+# format = 'YYYY-MM-DD' e.g. 2015-03-10
 def get_db_date(msg):
 	date_sig = get_date_signature(msg)
 	db_date = return_date(date_sig)
@@ -225,6 +291,7 @@ def return_time(sig, index):
 	h = int(raw_time[:colon])
 	minutes = raw_time[colon+1:colon+3]
 	am_pm = raw_time[colon+3:]
+	print "raw_tim '%s' am_pm '%s'" % (raw_time, am_pm)
 	h = (h + 12) if (('pm' in am_pm) or ('PM' in am_pm)) else h
 	hour = ('0' + str(h)) if (h<10) else str(h)
 	time = '%s:%s' % (hour, minutes)
@@ -232,12 +299,6 @@ def return_time(sig, index):
 
 	return time
 
-# ========================================================== #
-def handle_drop():
-	f = open('CS419/CS419mail/proc_drop_output.txt', 'w')
-	f.write(msg)
-	f.close()
-	return
 # ========================================================== #
 if __name__ == "__main__":
 

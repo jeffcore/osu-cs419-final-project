@@ -1,10 +1,10 @@
-From do.not.reply@engr.orst.edu  Sat Feb  7 07:00:11 2015
+From do.not.reply@engr.orst.edu  Sun Feb  8 02:50:34 2015
 Return-Path: <do.not.reply@engr.orst.edu>
 Received: from flip2.engr.oregonstate.edu (flip2.engr.oregonstate.edu [128.193.54.7])
-	by zen.engr.oregonstate.edu (8.14.4/8.14.4) with ESMTP id t17F0AY1015362
-	for <chuaprar@engr.orst.edu>; Sat, 7 Feb 2015 07:00:11 -0800
-Date: Sat, 7 Feb 2015 07:00:10 -0800
-Message-Id: <201502071500.t17F0AY1015362@zen.engr.oregonstate.edu>
+	by zen.engr.oregonstate.edu (8.14.4/8.14.4) with ESMTP id t18AoYRC020456
+	for <chuaprar@engr.orst.edu>; Sun, 8 Feb 2015 02:50:34 -0800
+Date: Sun, 8 Feb 2015 02:50:34 -0800
+Message-Id: <201502081050.t18AoYRC020456@zen.engr.oregonstate.edu>
 Content-Type: text/plain; charset="us-ascii"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 7bit
@@ -19,9 +19,35 @@ Subject: Advising Signup with Chuaprasert, Rittie confirmed for Rix,
 	Name: REDACTED
 	Email: REDACTED@engr.orst.edu
 	Date: Tuesday, March 10th, 2015
-	Time: 12:30PM - 01:45PM
+	Time: 01:30PM - 02:45PM
 
 
 	Please contact support@engr.oregonstate.edu if you experience problems
 	
+
+
+		------------------------------
+['Rix, Jeffrey Allan']
+email count:	1
+	rixj@onid.orst.edu
+result emails:	['rixj@onid.orst.edu']
+rixj@onid.orst.edu
+2015-03-10
+raw_tim '01:30PM' am_pm 'PM'
+13:30
+raw_tim '02:45PM' am_pm 'PM'
+14:45
+Tuesday, March 10, 2015  01:30PM
+Tuesday, March 10, 2015  02:45PM
+unique ID: rixj@onid.orst.edu::2015-03-10::13:30
+		------------------------------
+Chuaprasert, Rittie
+Rix, Jeffrey Allan
+chuaprar@engr.orst.edu
+rixj@onid.orst.edu
+2015-03-10
+13:30
+14:45
+		------------------------------
+Meeting conflict - new appointment not added.
 

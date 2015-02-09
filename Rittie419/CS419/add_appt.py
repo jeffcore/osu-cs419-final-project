@@ -9,7 +9,7 @@ def main(advisor='Chuaprasert, Rittie',
 	dt_start=datetime(2015,3,10,12,30),
 	dt_end=datetime(2015,3,10,13,45)):
 
-		
+	# prepare for date and time signatures	
 	datetxt = dt_start.strftime("%A, %B %dth, %Y")
 	starttxt = dt_start.strftime("%I:%M%p")
 	endtxt = dt_end.strftime("%I:%M%p")
