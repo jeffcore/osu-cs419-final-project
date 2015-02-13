@@ -74,6 +74,23 @@ def add_appt(adv, stud, adv_email, stud_email, date, start, end):
 
 		return unique_id
 
+
+# Drops an appointment from the appointmnt database 
+# @param date	appointment date
+# @param start	appointment start time
+# @return	unique ID associated with appointment
+def drop_appt_by_id(unique_id):
+
+	query = '''
+		DELETE FROM %s WHERE
+			('id'=%s);
+	''' % (table, str(unique_id))
+	print query
+	print execute(query)	
+
+	return         
+        
+        
 # Drops an appointment from the appointmnt database unless it's a conflict
 # @param date	appointment date
 # @param start	appointment start time
