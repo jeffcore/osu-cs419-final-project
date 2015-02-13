@@ -6,6 +6,7 @@ import sql_cmd
 import db_funcs
 import procfilter
 import datetime
+import drop_appt
 import drop_calendar, send_conf_email
 import mysql.connector
 
@@ -131,8 +132,10 @@ def handle_drop(appointment):
     dt_end = datetime.datetime.strptime(db_date + ' ' + db_end, '%Y-%d-%m %H:%M:%S')
         
     # send Outlook calendar invite to advisor
-    drop_calendar.drop_calendar(db_adv, db_stud, db_adv_email, dt_start, dt_end, uid)
+    # drop_calendar.drop_calendar(db_adv, db_stud, db_adv_email, dt_start, dt_end, uid)
     
+    drop_appt.main(db_adv, db_adv_email, dt_start, dt_end)
+        
     return
         
 def main():
