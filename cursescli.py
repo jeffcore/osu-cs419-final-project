@@ -2,6 +2,7 @@ import curses
 import traceback
 import datetime
 import binascii
+import sql_cmd
 import mysql.connector
 from mysql.connector import errorcode
 
@@ -22,7 +23,7 @@ def create_db_connection():
 def get_appointments_list(cnx, username):
     cursor = cnx.cursor()
     query = (
-        "SELECT id, student_name, student_email, appointment_date,"  
+        "SELECT id, student_name, appointment_date,"  
         "appointment_start_time,appointment_end_time FROM appointment WHERE advisor_email = (%s)"
     )
     username = username + "@onid.oregonstate.edu"    
@@ -57,38 +58,41 @@ def display_main_screen(cnx, stdscr, username):
     
     return data, username
     
-def display_appointments(stdscr, data, appt_num, appt_per_page, appt_page_number):
+def display_appointments(stdscr, data, appt_num, screen_x):
     # display appointments 
+    x = 1
     if appt_num > 0:
         stdscr.addstr("\nAppointment " + str(appt_num) + " Has Been Deleted\n")     
-    stdscr.addstr("ID\tStudent Name\t\tStudent Email\t\t\tAppt Date\tStart Time\tEnd Time\n")  
+    stdscr.addstr("ID\tStudent Name\t\tAppt Date\tStart Time\tEnd Time\n")  
     for row in data:            
         row_text = str(row[0]) + "\t"
         row_text += row[1] + "\t"
-        row_text += row[2] + "\t"
-        # row_text = row_text + str(datetime.datetime.strptime(row[3], f))            
+        row_text += str(row[2]) + "\t"
         row_text += str(row[3]) + "\t"
-        row_text += str(row[4]) + "\t"
-        row_text += str(row[5])
-        stdscr.addstr(row_text + "\n")    
+        row_text += str(row[4])
+        if x <= screen_x:
+            stdscr.addstr(row_text + "\n")    
+        x += 1
     
-    if len(data) > (appt_page_number  * appt_per_page):
-        stdscr.addstr("       See More Results - Press UP or DOWN Arrow") 
+    # if len(data) > (appt_page_number  * appt_per_page):
+    #    stdscr.addstr("       See More Results - Press UP or DOWN Arro") 
         
     
-def get_appointment_number(stdscr):   
+def get_appointment_number(stdscr, line_start_action_input):   
     #get action from user
-    stdscr.addstr(17,0, "\nDelete Appointment - Enter Number (or 'q' to quit)\n")   
+    stdscr.addstr(line_start_action_input,0, "\nDelete Appointment - Enter Number (or 'q' to quit)\n")   
     input = ""
     quit = False
+    cursor_location = 0
     while True:
-        event = stdscr.getch(19,0)
+        event = stdscr.getch(line_start_action_input+2,cursor_location)
         # stdscr.addstr(str(event))    
         if event == ord("q"): 
             quit = True
             break
         elif ord("0") <= event <= ord("9"):
-            input += chr(event)            
+            input += chr(event)   
+            cursor_location+=1           
         elif event == 10:
             break           
         elif event == curses.KEY_DOWN:            
@@ -103,7 +107,6 @@ def get_appointment_number(stdscr):
     
 def main():
     cnx = create_db_connection()
-    f = '%Y-%m-%d'
     username = ""
     appt_num = 0
     appt_per_page = 10
@@ -113,11 +116,14 @@ def main():
         stdscr = curses.initscr()
         scrsize = stdscr.getmaxyx()
         linesused = 7
+        lines_for_appt_display = scrsize[0] - linesused
+        line_start_action_input = scrsize[0] - 3
         #Turn off echoing of keys
         #enter cbreak mode
         curses.noecho()
         curses.cbreak()
         stdscr.keypad(1)
+        stdscr.scrollok(1)
                 
         while True:
             stdscr.clear()
@@ -125,10 +131,10 @@ def main():
             data, username = display_main_screen(cnx, stdscr, username)
                         
             # display appointments         
-            display_appointments(stdscr, data, appt_num, appt_per_page, appt_page_number)            
+            display_appointments(stdscr, data, appt_num, lines_for_appt_display)            
                 
             while True:        
-                input, quit = get_appointment_number(stdscr)          
+                input, quit = get_appointment_number(stdscr, line_start_action_input)          
             
                 if not quit:
                     stdscr.addstr(input)    
@@ -145,9 +151,11 @@ def main():
                             # stdscr.addstr("\nAppointment " + str(appt_num) + " Has Been Deleted\n")                             
                             break
                         else:
-                            stdscr.addstr("\nAppointment " + str(appt_num) + " Does Not Exist\n")    
+                            stdscr.deleteln()
+                            stdscr.addstr(line_start_action_input+2, 10, "Appointment " + str(appt_num) + " Does Not Exist")    
                     except:
-                        stdscr.addstr("Invalid number")  
+                        stdscr.deleteln()
+                        stdscr.addstr(line_start_action_input+2, 10, "Invalid number")  
                 else:
                     break
         
