@@ -2,7 +2,6 @@ import curses
 import traceback
 import datetime
 import binascii
-import sql_cmd
 import mysql.connector
 from mysql.connector import errorcode
 
