@@ -31,7 +31,7 @@ def get_appointments_list(cnx, username):
         "SELECT id, student_name, appointment_date,appointment_start_time,appointment_end_time,"  
         "advisor_name, advisor_email, student_email FROM temp WHERE advisor_email = (%s)"
     )
-    username = username + "@onid.oregonstate.edu"    
+    
     cursor.execute(query, (username,))
     data = cursor.fetchall()   
     return data
@@ -47,7 +47,7 @@ def display_main_screen(cnx, stdscr, username):
             stdscr.addstr("\n")
             
         if username == "":
-            stdscr.addstr("Type Your OSU Username: ")            
+            stdscr.addstr("Type In Your OSU email: ")            
             curses.echo()
             username = stdscr.getstr(3,24,30)                                
       
@@ -112,11 +112,9 @@ def get_appointment_number(stdscr, line_start_action_input):
             None   
     return input, quit
     
-def handle_drop(appointment):
-    
-    # retrieve uid from database and drop appointment
-    # db_funcs.drop_appt_by_id(appointment[0])
-    # extract necessary data from email message
+def handle_drop(appointment):    
+   
+    # extract necessary data from appointment array
     db_adv = appointment[5]
     db_adv_email = appointment[6]
     db_date = str(appointment[2])
@@ -124,19 +122,16 @@ def handle_drop(appointment):
     db_end = str(appointment[4])
     db_stud = appointment[1]
     db_stud_email = appointment[7]
-
-    uid = db_adv_email + '::' + db_date + '::' + db_start
-  
+    
+    # create unique id
+    uid = db_adv_email + '::' + db_date + '::' + db_start  
     
     # prepare datetime info
     dt_start = datetime.datetime.strptime(db_date + ' ' + db_start, '%Y-%d-%m %H:%M:%S')
     dt_end = datetime.datetime.strptime(db_date + ' ' + db_end, '%Y-%d-%m %H:%M:%S')
-
         
     # send Outlook calendar invite to advisor
-    drop_calendar.drop_calendar(db_adv, db_stud,
-        db_adv_email, dt_start, dt_end, uid)
-
+    drop_calendar.drop_calendar(db_adv, db_stud, db_adv_email, dt_start, dt_end, uid)
     
     return
         
