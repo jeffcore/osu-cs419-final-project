@@ -128,8 +128,8 @@ def handle_drop(appointment):
     uid = db_adv_email + '::' + db_date + '::' + db_start  
     
     # prepare datetime info
-    dt_start = datetime.datetime.strptime(db_date + ' ' + db_start, '%Y-%d-%m %H:%M:%S')
-    dt_end = datetime.datetime.strptime(db_date + ' ' + db_end, '%Y-%d-%m %H:%M:%S')
+    dt_start = datetime.datetime.strptime(db_date + ' ' + db_start, '%Y-%m-%d %H:%M:%S')
+    dt_end = datetime.datetime.strptime(db_date + ' ' + db_end, '%Y-%m-%d %H:%M:%S')
         
     # send Outlook calendar invite to advisor
     # drop_calendar.drop_calendar(db_adv, db_stud, db_adv_email, dt_start, dt_end, uid)
