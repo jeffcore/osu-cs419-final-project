@@ -1,1 +1,1 @@
-(32, u'Rittie Chuaprasert', datetime.date(2015, 2, 9), datetime.timedelta(0, 34200), datetime.timedelta(0, 43200), u'Jeff Rix', u'rixj@onid.oregonstate.edu', u'rixempire@gmail.com')2015-02-09
+(36, u'Rittie Chuaprasert', datetime.date(2015, 2, 9), datetime.timedelta(0, 55800), datetime.timedelta(0, 43200), u'Jeff Rix', u'rixj@onid.oregonstate.edu', u'rixempire@gmail.com')15:30:0012:00:00
