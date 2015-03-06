@@ -31,9 +31,17 @@ def get_appointments_list(cnx, username):
         "SELECT id, student_name, appointment_date,appointment_start_time,appointment_end_time,"  
         "advisor_name, advisor_email, student_email FROM temp WHERE advisor_email = (%s)"
     )
-    
+ 
     cursor.execute(query, (username,))
     data = cursor.fetchall()   
+    
+    cnx.commit()
+    cursor.close()
+    
+    
+    f = open('data.txt', 'a')
+    f.write(str(data)) 
+    f.close()
     return data
 
 def display_main_screen(cnx, stdscr, username):    
@@ -98,7 +106,7 @@ def display_appointments(stdscr, data, appt_num, screen_x, appt_selected):
     
 def get_appointment_number(stdscr, line_start_action_input, appt_selected):   
     #get action from user
-    stdscr.addstr(line_start_action_input,0, "\nUp/Down Arrow to Select | d to Delete Appointment | q to Quit ")   
+    stdscr.addstr(line_start_action_input,0, "\nUp/Down Arrow to Select | d to Delete | q to Quit  | r to Refresh")   
     input = ""
     quit = False
     cursor_location = 0
@@ -110,6 +118,9 @@ def get_appointment_number(stdscr, line_start_action_input, appt_selected):
             quit = True
             break
         elif event == ord("d"): 
+            input = chr(event)  
+            break            
+        elif event == ord("r"): 
             input = chr(event)  
             break            
         elif event == 10:
@@ -124,6 +135,7 @@ def get_appointment_number(stdscr, line_start_action_input, appt_selected):
     
 def handle_drop(appointment):      
     # extract necessary data from appointment array
+    db_uid = appointment[0]
     db_adv = appointment[5]
     db_adv_email = appointment[6]
     db_date = str(appointment[2])
@@ -139,11 +151,11 @@ def handle_drop(appointment):
     dt_start = datetime.datetime.strptime(db_date + ' ' + db_start, '%Y-%m-%d %H:%M:%S')
     dt_end = datetime.datetime.strptime(db_date + ' ' + db_end, '%Y-%m-%d %H:%M:%S')
         
-    # send Outlook calendar invite to advisor
-    # drop_calendar.drop_calendar(db_adv, db_stud, db_adv_email, dt_start, dt_end, uid)
-    
-    drop_appt.main(db_adv, db_adv_email, dt_start, dt_end)
-        
+    # send Outlook calendar invite to advisor    
+    #drop_appt.main(db_adv, db_adv_email, dt_start, dt_end)
+    drop_calendar.drop_calendar(db_adv, db_stud, db_adv_email, dt_start, dt_end, uid)
+    db_funcs.drop_appt_by_id(db_uid)
+      
     return
         
 def main():
@@ -170,7 +182,9 @@ def main():
         while True:
             stdscr.clear()
             # load top of screen includes username search
+            data = None
             data, username = display_main_screen(cnx, stdscr, username)
+          
             if appt_selected < 1:
                 appt_selected = 1    
             elif appt_selected > len(data):
@@ -178,24 +192,25 @@ def main():
                 
             # display appointments         
             display_appointments(stdscr, data, appt_num, lines_for_appt_display, appt_selected)                       
-                       
+            stdscr.refresh();            
             input, appt_selected, quit = get_appointment_number(stdscr, line_start_action_input, appt_selected)       
           
             if not quit:
                 stdscr.addstr(input)    
                 
                 if input == "d" or input == 'd':
-                    try:
-                        appt_num = int(appt_selected)                                               
+                    try:                                                           
                         appointment = data[appt_selected-1]                        
+                        appt_num = int(appointment[0])                                
                         handle_drop(appointment)
-                        data.remove(appt_selected-1)
+                        # data.remove(appt_selected-1)                        
                     except Exception as inst:                                             
                         f = open('error.txt', 'w')
                         f.write(str(inst)) 
                         f.close()
                         stdscr.deleteln()
                         stdscr.addstr(line_start_action_input+2, 10, "Invalid number")  
+                
             else:
                 break
             
