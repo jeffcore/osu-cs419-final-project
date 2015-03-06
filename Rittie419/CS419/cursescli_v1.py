@@ -23,6 +23,7 @@ def create_db_connection():
     except mysql.connector.Error as err:
         print "DB Connection Error"
 		
+
     return cnx
 
 def get_appointments_list(cnx, username):
@@ -45,14 +46,13 @@ def display_main_screen(cnx, stdscr, username):
             stdscr.addstr("Error: no appointments found for user.\n")   
         else:
             stdscr.addstr("\n")
-        username =  'chuaprar@engr.orst.edu' #delete line
-        
+            
         if username == "":
             stdscr.addstr("Type In Your OSU email: ")            
             curses.echo()
             username = stdscr.getstr(3,24,30)                                
       
-        data = get_appointments_list(cnx, 'chuaprar@engr.orst.edu') # and username variable here
+        data = get_appointments_list(cnx, username)
         rowcount = len(data)
         
         if rowcount == 0: 
@@ -64,8 +64,8 @@ def display_main_screen(cnx, stdscr, username):
     
     return data, username
 
-   # rixj@onid.oregonstate.edu
-def display_appointments(stdscr, data, appt_num, screen_x, appt_selected):
+  
+def display_appointments(stdscr, data, appt_num, screen_x):
     # display appointments 
     # set highlight and normal colors
     curses.start_color()
@@ -74,7 +74,6 @@ def display_appointments(stdscr, data, appt_num, screen_x, appt_selected):
     n = curses.A_NORMAL
 
     x = 1
-    
     if appt_num > 0:
         stdscr.addstr("\nAppointment " + str(appt_num) + " Has Been Deleted\n")     
     stdscr.addstr("ID\tStudent Name\t\tAppt Date\tStart Time\tEnd Time\n")  
@@ -85,10 +84,7 @@ def display_appointments(stdscr, data, appt_num, screen_x, appt_selected):
         row_text += str(row[3]) + " \t"  # appointment start time
         row_text += str(row[4])         # appointment end time
         if x <= screen_x:
-            if x == appt_selected:
-                stdscr.addstr(row_text + "\n", h)   
-            else:
-                stdscr.addstr(row_text + "\n", n) 
+            stdscr.addstr(row_text + "\n", h)    
         x += 1
     
     # if len(data) > (appt_page_number  * appt_per_page):
@@ -96,9 +92,9 @@ def display_appointments(stdscr, data, appt_num, screen_x, appt_selected):
         
     return
     
-def get_appointment_number(stdscr, line_start_action_input, appt_selected):   
+def get_appointment_number(stdscr, line_start_action_input):   
     #get action from user
-    stdscr.addstr(line_start_action_input,0, "\nUp/Down Arrow to Select | d to Delete Appointment | q to Quit ")   
+    stdscr.addstr(line_start_action_input,0, "\nDelete Appointment - Enter Number (or 'q' to quit)\n")   
     input = ""
     quit = False
     cursor_location = 0
@@ -106,23 +102,22 @@ def get_appointment_number(stdscr, line_start_action_input, appt_selected):
         event = stdscr.getch(line_start_action_input+2,cursor_location)
         # stdscr.addstr(str(event))    
         if event == ord("q"): 
-            input = chr(event)  
             quit = True
             break
-        elif event == ord("d"): 
-            input = chr(event)  
-            break            
+        elif ord("0") <= event <= ord("9"):
+            input += chr(event)   
+            cursor_location+=1           
         elif event == 10:
             break           
         elif event == curses.KEY_DOWN:            
-            appt_selected += 1  
-            break              
+            break            
         elif event == curses.KEY_UP:
-            appt_selected -= 1
             break  
-    return input, appt_selected, quit
+       
+    return input, quit
     
-def handle_drop(appointment):      
+def handle_drop(appointment):    
+   
     # extract necessary data from appointment array
     db_adv = appointment[5]
     db_adv_email = appointment[6]
@@ -152,7 +147,6 @@ def main():
     appt_num = 0
     appt_per_page = 10
     appt_page_number = 1
-    appt_selected = 1
     try:
         #initialize curses
         stdscr = curses.initscr()
@@ -171,33 +165,47 @@ def main():
             stdscr.clear()
             # load top of screen includes username search
             data, username = display_main_screen(cnx, stdscr, username)
-            if appt_selected < 1:
-                appt_selected = 1    
-            elif appt_selected > len(data):
-                appt_selected -= 1
-                
+                        
             # display appointments         
-            display_appointments(stdscr, data, appt_num, lines_for_appt_display, appt_selected)                       
-                       
-            input, appt_selected, quit = get_appointment_number(stdscr, line_start_action_input, appt_selected)       
-          
-            if not quit:
-                stdscr.addstr(input)    
+            display_appointments(stdscr, data, appt_num, lines_for_appt_display)            
                 
-                if input == "d" or input == 'd':
+            while True:        
+                input, quit = get_appointment_number(stdscr, line_start_action_input)          
+            
+                if not quit:
+                    stdscr.addstr(input)    
+                                
                     try:
-                        appt_num = int(appt_selected)                                               
-                        appointment = data[appt_selected-1]                        
-                        handle_drop(appointment)
-                        data.remove(appt_selected-1)
+                        appt_num = int(input)
+                        
+                        match = False
+                        appointment = None
+                        for row in data:  
+                            if row[0] == appt_num:
+                                appointment = row
+                                f = open('workfile.txt', 'w')
+                                f.write(str(appointment)) 
+                                f.write(str(appointment[3])) 
+                                f.write(str(appointment[4]))                                      
+                                match = True                                
+                        if match:
+                            # stdscr.addstr("\nAppointment " + str(appt_num) + " Has Been Deleted\n")                               
+                            handle_drop(appointment)
+                            
+                            break
+                        else:
+                            stdscr.deleteln()
+                            stdscr.addstr(line_start_action_input+2, 10, "Appointment " + str(appt_num) + " Does Not Exist")    
                     except Exception as inst:                                             
                         f = open('error.txt', 'w')
-                        f.write(str(inst)) 
-                        f.close()
+                        f.write(str(inst))                        
                         stdscr.deleteln()
                         stdscr.addstr(line_start_action_input+2, 10, "Invalid number")  
-            else:
-                break
+                else:
+                    break
+        
+            if quit:
+                break        
             
         stdscr.keypad(0)
         curses.nocbreak()

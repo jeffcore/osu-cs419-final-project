@@ -1,1 +1,1 @@
-(22, u'Rix, Jeffrey Allan', datetime.date(2015, 3, 10), datetime.timedelta(0, 48600), datetime.timedelta(0, 53100), u'Chuaprasert, Rittie', u'chuaprar@engr.orst.edu', u'rixj@onid.orst.edu')13:30:0014:45:00
+(41, u'Rittie Chuaprasert', datetime.date(2015, 2, 9), datetime.timedelta(0, 73800), datetime.timedelta(0, 43200), u'Jeff Rix', u'chuaprar@engr.orst.edu', u'rixempire@gmail.com')20:30:0012:00:00
