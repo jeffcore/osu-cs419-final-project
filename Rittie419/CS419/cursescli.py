@@ -59,29 +59,32 @@ def get_appointments_list(cnx, email):
 def display_main_screen(cnx, stdscr, email):    
     error = False
     data = None
-    while True:        
-        stdscr.addstr("Welcome to Advisor Appointment CLI!\n\n")    
-        if error:                
-            stdscr.addstr("Error: no appointments found for user.\n")   
-        else:
-            stdscr.addstr("\n")
-        email =  'chuaprar@engr.orst.edu' #delete line
-        
-        if email == "":
-            stdscr.addstr("Type In Your OSU email: ")            
-            curses.echo()
-            email = stdscr.getstr(3,24,30)                                
-      
-        data = get_appointments_list(cnx, 'chuaprar@engr.orst.edu') # and email variable here
-        rowcount = len(data)
-        
-        if rowcount == 0: 
-            error = True
-            email = ""
-            stdscr.clear()
-        else:
-            break
     
+    if email:
+         data = get_appointments_list(cnx, email) # and email variable here
+    else:
+        while True:        
+            stdscr.addstr(0, 0, "Welcome to Advisor Appointment CLI!\n")    
+            if error:                
+                stdscr.addstr(1,0,"Error: no appointments found for user.\n")   
+            else:
+                stdscr.addstr("\n")
+       
+            stdscr.addstr(2,0,"Type In Your OSU email: ")            
+            curses.echo()
+            email = stdscr.getstr(2,24,30)            
+      
+            data = get_appointments_list(cnx, email) # and email variable here
+            rowcount = len(data)
+            
+            if rowcount == 0: 
+                error = True
+                email = ""
+                stdscr.clear()
+            else:
+                break
+        
+        stdscr.clear()
     return data, email
 
 # Displays the list of appointments on the screen
@@ -96,13 +99,18 @@ def display_appointments(stdscr, data, appt_num, lines_for_appt_display, appt_se
     # set highlight and normal colors
     curses.start_color()
     curses.init_pair(1,curses.COLOR_RED, curses.COLOR_WHITE)  # set colors for highlight
+    curses.init_pair(2, curses.COLOR_GREEN, curses.COLOR_BLACK)
+    g = curses.color_pair(2)
     h = curses.color_pair(1)   # highlight colors
     n = curses.A_NORMAL        # normal colors
     x = 1   #count the number of rows displayed, used for highlighting 
     appt_total_number = len(data)
     selected_row = appt_selected
     display_start_row = 1
-    display_end_row = lines_for_appt_display
+    if appt_total_number < lines_for_appt_display:
+        display_end_row = appt_total_number
+    else:
+        display_end_row = lines_for_appt_display
     
     # used for highlighting appointment row - stops highlight from leaving screen
     if appt_selected < 1:    # highlight will stop at first row
@@ -125,17 +133,16 @@ def display_appointments(stdscr, data, appt_num, lines_for_appt_display, appt_se
     f = open('page.txt', 'a')
     f.write('total appt ' + str(appt_total_number) + ' appt selected ' + str(appt_selected) + ' selected row  ' + str(selected_row) + ' start row' + str(display_start_row) + ' end row' + str(display_end_row) +'\n') 
     f.close()
-    # display verification for deleted appointment
-    # if appt_num > 0:
-    #    stdscr.addstr("\nAppointment " + str(appt_num) + " Has Been Deleted\n")     
-    
+   
     # display appointments
-    stdscr.addstr("ID\tStudent Name\t\tAppt Date\tStart Time\tEnd Time\n")  
+    stdscr.addstr("ID\tStudent Name\t\tAppt Date\tStart Time\tEnd Time\n", g)  
     for row in data:      
         row_text = str(row[0]) + "\t"   # appoint id
         row_text += row[1] + "\t"       # student name
+        if len(row[1]) < 16:            # add extra tab if string length is to short
+            row_text += "\t"    
         row_text += str(row[2]) + "\t"  # appointment date
-        row_text += str(row[3]) + " \t"  # appointment start time
+        row_text += str(row[3]) + " \t" # appointment start time
         row_text += str(row[4])         # appointment end time
         # display appointments only if they are withing the allowing number of rows to display
         # if x <= lines_for_appt_display:
@@ -147,7 +154,7 @@ def display_appointments(stdscr, data, appt_num, lines_for_appt_display, appt_se
                 stdscr.addstr(row_text + "\n", n) 
        
         x += 1
-    stdscr.addstr('Displaying ' + str(display_start_row) + ' to ' + str(display_end_row) + ' of ' + str(appt_total_number) + ' appointments')      
+    stdscr.addstr('Displaying ' + str(display_start_row) + ' to ' + str(display_end_row) + ' of ' + str(appt_total_number) + ' appointments', curses.A_BOLD)      
     return appt_selected
  
 # Gets user input -   
@@ -160,13 +167,17 @@ def display_appointments(stdscr, data, appt_num, lines_for_appt_display, appt_se
 # @return number of appointment selected 
 # @return quit was selected
 def get_appointment_number(stdscr, line_start_action_input, appt_selected):   
+    # hide cursor
+    curses.curs_set(0)
+    # get green text color pair
+    g = curses.color_pair(2)
     #get action from user
-    stdscr.addstr(line_start_action_input+1,0, "Up/Down Arrow to Select | d to Delete | q to Quit | r to Refresh")   
+    stdscr.addstr(line_start_action_input,0, "Up/Down Arrow to Select | d to Delete | q to Quit | r to Refresh", g)   
     input = ""
     quit = False
     cursor_location = 0
     while True:
-        event = stdscr.getch(line_start_action_input+2,cursor_location)
+        event = stdscr.getch(line_start_action_input,cursor_location)
         # stdscr.addstr(str(event))    
         if event == ord("q") or event == ord("Q"): 
             input = chr(event)  
@@ -215,20 +226,19 @@ def verify_deletion(stdscr, appt_num, screen_y):
     panel1.top(); 
     curses.panel.update_panels() 
     stdscr.refresh() 
+    
+    # loop for selection and to get user decision
     while True:
         event = window.getch()
         if event == curses.KEY_DOWN:            
             if selected:
                 window.addstr(2, window_x/2-3, "Yes", n)
-                window.addstr(3, window_x/2-3, "No", h) 
-                stdscr.refresh()                 
+                window.addstr(3, window_x/2-3, "No", h)                            
                 selected = 0
         elif event == curses.KEY_UP:
             if not selected:
                 window.addstr(2, window_x/2-3, "Yes", h)
-                window.addstr(3, window_x/2-3, "No", n)  
-                stdscr.refresh()
-                window.refresh()
+                window.addstr(3, window_x/2-3, "No", n)                  
                 selected = 1 
         elif event == ord("y") or event == ord("Y"): 
             selected = 1
@@ -238,7 +248,8 @@ def verify_deletion(stdscr, appt_num, screen_y):
             break  
         elif event == 10:          
             break   
-  
+        
+        window.refresh()
     return selected
     
     
@@ -279,8 +290,8 @@ def main():
         #initialize curses
         stdscr = curses.initscr()
         scrsize = stdscr.getmaxyx()
-        lines_used_not_for_appt = 7
-        lines_used_for_action_input = 3
+        lines_used_not_for_appt = 6   #includes everything except appt rows
+        lines_used_for_action_input = 1
         lines_for_appt_display = scrsize[0] - lines_used_not_for_appt   # number of total rows - non appt rows
         line_start_action_input = scrsize[0] - lines_used_for_action_input  #row number to start displaying input section
         #Turn off echoing of keys
@@ -296,9 +307,13 @@ def main():
             stdscr.clear()   
             # set appointment data to none 
             data = None
+            
             # load top of screen includes email search
             data, email = display_main_screen(cnx, stdscr, email)
-              
+
+            stdscr.addstr(0, 0, "Welcome to Advisor Appointment CLI!\n")    
+            stdscr.addstr(2,0, "Appointments for " + email + "\n")    
+            
             # display appointments         
             appt_selected = display_appointments(stdscr, data, appt_num, lines_for_appt_display, appt_selected)  
             
