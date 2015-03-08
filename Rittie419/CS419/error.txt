@@ -1,1 +1,1 @@
-list.remove(x): x not in list
+cannot concatenate 'str' and 'int' objects

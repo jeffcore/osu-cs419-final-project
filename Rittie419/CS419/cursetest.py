@@ -1,182 +1,72 @@
-#!/usr/bin/python
-
-# hi, this routine isn't licensed. but credit would be nice somewhere.
-# See http://pp19dd.com/2013/11/simple-python-list-picker-using-curses/
-
-# usage:
-# opts = Picker(
-#    title = 'Delete all files',
-#    options = ["Yes", "No"]
-# ).getSelected()
-
-# returns a simple list
-# cancel returns False
-
+'''
+cursescli.py
+This module contains the curses CLI application for the CS419 Project
+Simplifed Advising Scheduling for our implementation.
+'''
 import curses
-import curses.wrapper
+import traceback
+import datetime
+import binascii
+import sql_cmd
+import db_funcs
+import procfilter
+import datetime
+import drop_appt
+import drop_calendar, send_conf_email
+import mysql.connector
+import curses.panel 
+from mysql.connector import errorcode
 
-class Picker:
-    """Allows you to select from a list with curses"""
-    stdscr = None
-    win = None
-    title = ""
-    arrow = ""
-    footer = ""
-    more = ""
-    c_selected = ""
-    c_empty = ""
+def verify_deletion(stdscr):
+    window = curses.newwin(3,20,4,4)
+    window.addstr(0, 0, "Hello, world!")
+    panel1 = curses.panel.new_panel(window)
     
-    cursor = 0
-    offset = 0
-    selected = 0
-    selcount = 0
-    aborted = False
+    curses.panel.update_panels()
+    stdscr.refresh()
     
-    window_height = 15
-    window_width = 60
-    all_options = []
-    length = 0
+    panel1.top(); 
+    curses.panel.update_panels() 
+    stdscr.refresh() 
+    window.getch()
+   
+    return
     
-    def curses_start(self):
-        self.stdscr = curses.initscr()
+    
+        
+def main():
+   
+    try:
+        #initialize curses
+        stdscr = curses.initscr()
+        scrsize = stdscr.getmaxyx()
+        lines_used_not_for_appt = 7
+        lines_used_for_action_input = 3
+        lines_for_appt_display = scrsize[0] - lines_used_not_for_appt   # number of total rows - non appt rows
+        line_start_action_input = scrsize[0] - lines_used_for_action_input  #row number to start displaying input section
+        #Turn off echoing of keys
+        # enter cbreak mode
         curses.noecho()
         curses.cbreak()
-        self.win = curses.newwin(
-            5 + self.window_height,
-            self.window_width,
-            2,
-            4
-        )
-    
-    def curses_stop(self):
+        stdscr.keypad(1)
+        stdscr.scrollok(1)
+        
+       
+        verify_deletion(stdscr)
+        
+        
+        # clean up screen and return to normal command line 
+        stdscr.keypad(0)
         curses.nocbreak()
-        self.stdscr.keypad(0)
         curses.echo()
         curses.endwin()
+    except:
+        # In event of error, restore terminal to sane state.
+        stdscr.keypad(0)
+        curses.echo()
+        curses.nocbreak()
+        curses.endwin()
+        traceback.print_exc()           # Print the exception
 
-    def getSelected(self):
-        if self.aborted == True:
-            return( False )
-
-        ret_s = filter(lambda x: x["selected"], self.all_options)
-        ret = map(lambda x: x["label"], ret_s)
-        return( ret )
-        
-    def redraw(self):
-        self.win.clear()
-        self.win.border(
-            self.border[0], self.border[1],
-            self.border[2], self.border[3],
-            self.border[4], self.border[5],
-            self.border[6], self.border[7]
-        )
-        self.win.addstr(
-            self.window_height + 4, 5, " " + self.footer + " "
-        )
-        
-        position = 0
-        range = 
-self.all_options[self.offset:self.offset+self.window_height+1]
-        for option in range:
-            if option["selected"] == True:
-                line_label = self.c_selected + " "
-            else:
-                line_label = self.c_empty + " "
-            
-            self.win.addstr(position + 2, 5, line_label + option["label"])
-            position = position + 1
-            
-        # hint for more content above
-        if self.offset > 0:
-            self.win.addstr(1, 5, self.more)
-        
-        # hint for more content below
-        if self.offset + self.window_height <= self.length - 2:
-            self.win.addstr(self.window_height + 3, 5, self.more)
-        
-        self.win.addstr(0, 5, " " + self.title + " ")
-        self.win.addstr(
-            0, self.window_width - 8,
-            " " + str(self.selcount) + "/" + str(self.length) + " "
-        )
-        self.win.addstr(self.cursor + 2,1, self.arrow)
-        self.win.refresh()
-
-    def check_cursor_up(self):
-        if self.cursor < 0:
-            self.cursor = 0
-            if self.offset > 0:
-                self.offset = self.offset - 1
-    
-    def check_cursor_down(self):
-        if self.cursor >= self.length:
-            self.cursor = self.cursor - 1
-    
-        if self.cursor > self.window_height:
-            self.cursor = self.window_height
-            self.offset = self.offset + 1
-            
-            if self.offset + self.cursor >= self.length:
-                self.offset = self.offset - 1
-    
-    def curses_loop(self, stdscr):
-        while 1:
-            self.redraw()
-            c = stdscr.getch()
-            
-            if c == ord('q') or c == ord('Q'):
-                self.aborted = True
-                break
-            elif c == curses.KEY_UP:
-                self.cursor = self.cursor - 1
-            elif c == curses.KEY_DOWN:
-                self.cursor = self.cursor + 1
-            #elif c == curses.KEY_PPAGE:
-            #elif c == curses.KEY_NPAGE:
-            elif c == ord(' '):
-                self.all_options[self.selected]["selected"] = \
-                    not self.all_options[self.selected]["selected"]
-            elif c == 10:
-                break
-                    
-            # deal with interaction limits
-            self.check_cursor_up()
-            self.check_cursor_down()
-
-            # compute selected position only after dealing with limits
-            self.selected = self.cursor + self.offset
-            
-            temp = self.getSelected()
-            self.selcount = len(temp)
-    
-    def __init__(
-        self, 
-        options, 
-        title='Select', 
-        arrow="-->",
-        footer="Space = toggle, Enter = accept, q = cancel",
-        more="...",
-        border="||--++++",
-        c_selected="[X]",
-        c_empty="[ ]"
-    ):
-        self.title = title
-        self.arrow = arrow
-        self.footer = footer
-        self.more = more
-        self.border = border
-        self.c_selected = c_selected
-        self.c_empty = c_empty
-        
-        self.all_options = []
-        
-        for option in options:
-            self.all_options.append({
-                "label": option,
-                "selected": False
-            })
-            self.length = len(self.all_options)
-        
-        self.curses_start()
-        curses.wrapper( self.curses_loop )
-        self.curses_stop()
+if  __name__ == "__main__":
+    main()
