@@ -155,7 +155,13 @@ def display_appointments(stdscr, data, appt_num, lines_for_appt_display, appt_se
                 stdscr.addstr(row_text + "\n", n) 
        
         x += 1
-    stdscr.addstr('Displaying ' + str(display_start_row) + ' to ' + str(display_end_row) + ' of ' + str(appt_total_number) + ' appointments', curses.A_BOLD)      
+    if appt_total_number > 0:
+        stdscr.addstr('Displaying ' + str(display_start_row) + ' to ' + str(display_end_row) + ' of ' + str(appt_total_number) + ' appointments', curses.A_BOLD)      
+    else:
+        stdscr.addstr('You don\'t have any appointments.', curses.A_BOLD)      
+  
+    
+    
     return appt_selected
  
 # Gets user input -   
@@ -332,7 +338,7 @@ def main():
                         appointment = data[appt_selected-1]        # get appointment data from array                
                         appt_num = int(appointment[0])             # get appointment id to delete                         
                         # show popup box to verify deletion
-                        if verify_deletion(stdscr,appt_num,scrsize[0]):
+                        if verify_deletion(stdscr,appt_selected,scrsize[0]):
                             handle_drop(appointment)       
                             appt_selected = 1     
                     except Exception as inst:                                             
