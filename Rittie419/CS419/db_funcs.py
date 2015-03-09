@@ -12,21 +12,12 @@ from db_funcs import view_appt, add_appt, drop_appt, ...
 
 from sql_cmd import execute
 
-table = "'temp'"
+DEFAULT_TABLE = "'temp'"
 
 # Returns all the data in the database
-# @return contents of database in nested list format:  
-#	[[row1field1,row1field2,...], [row2field1,row2field2,...], ...]
-def view_appt():
+def view_appt(table = DEFAULT_TABLE):
 	query = 'SELECT * FROM %s' % (table)
-	table_borders = False
-	appts = execute(query, table_borders)
-	appts = appts.split('\n')
-	for r in range(len(appts)):
-		appts[r] = appts[r].split('\t')
-		if (len(appts[r])==1):
-			appts.pop(r)
-
+	appts = execute(query)
 	return appts
 
 # Adds an appointment to the appointmnt database unless it's a conflict
@@ -38,7 +29,7 @@ def view_appt():
 # @param start	appointment start time
 # @param end	appointment end time
 # @return	unique ID associated with appointment
-def add_appt(adv, stud, adv_email, stud_email, date, start, end):
+def add_appt(adv, stud, adv_email, stud_email, date, start, end, table = DEFAULT_TABLE):
 
 	if is_repeat(date, start, end):
 		print "Meeting conflict - new appointment not added."
@@ -79,7 +70,7 @@ def add_appt(adv, stud, adv_email, stud_email, date, start, end):
 # @param date	appointment date
 # @param start	appointment start time
 # @return	unique ID associated with appointment
-def drop_appt_by_id(unique_id):
+def drop_appt_by_id(unique_id, table = DEFAULT_TABLE):
 
 	query = '''
 		DELETE FROM %s WHERE
@@ -95,7 +86,7 @@ def drop_appt_by_id(unique_id):
 # @param date	appointment date
 # @param start	appointment start time
 # @return	unique ID associated with appointment
-def drop_appt(date, start):
+def drop_appt(date, start, table = DEFAULT_TABLE):
 	unique_id = get_unique_id(date, start)
 
 	query = '''
@@ -112,7 +103,7 @@ def drop_appt(date, start):
 # by convention, the FORMAT=
 # 	'{student_email}::{appointment_date}::{appointment_start_time}'
 # @return unique in FORMAT above
-def get_unique_id(date, start):
+def get_unique_id(date, start, table = DEFAULT_TABLE):
 	query = '''
 		SELECT 'student_email' FROM %s WHERE
 			('appointment_date'="%s" AND 'appointment_start_time'="%s");
@@ -127,7 +118,7 @@ def get_unique_id(date, start):
 # @param date	appointment date
 # @param start	appointment start time
 # @return	student name
-def get_student(date, start):
+def get_student(date, start, table = DEFAULT_TABLE):
 	query = '''
 		SELECT 'student_name' FROM %s WHERE
 			('appointment_date'="%s" AND 'appointment_start_time'="%s");
@@ -142,7 +133,7 @@ def get_student(date, start):
 # @param start	appointment start time
 # @param end	appointment end time
 # @return	True if conflict exists, False otherwise
-def is_repeat(date, start, end):
+def is_repeat(date, start, end, table = DEFAULT_TABLE):
 	conflict_found = False
 	query = '''
 		SELECT 'id' FROM %s WHERE 
@@ -158,4 +149,53 @@ def is_repeat(date, start, end):
 		conflict_found = True
 
 	return conflict_found
+
+# Initializes a new blank table in cs496-g8 database
+# @param table	name of new blank table in cs496-g8 database
+def new_table(table):
+
+	print 'Tables BEFORE:\n'
+	print execute('show tables;')
+	print '------------------------------------'
+	query = '''
+		SET FOREIGN_KEY_CHECKS=0;
+		DROP TABLE IF EXISTS `%s`;
+
+		-- Create a table to hold the appts
+		CREATE TABLE `%s` (
+		`id` int NOT NULL AUTO_INCREMENT,
+		`advisor_name` varchar(100),
+		`student_name` varchar(100),
+		`advisor_email` varchar(100),
+		`student_email` varchar(100),
+		`appt_date` date,
+		`appt_start_time` time,
+		`appt_end_time` time,
+		`date_created` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+		PRIMARY KEY (`id`)
+		) ENGINE=InnoDB;
+		''' % (table, table)
+
+	execute(query, False)
+	print 'Tables AFTER:\n'
+	print execute('show tables;')
+	print execute('show create table %s;' % table, False)
+
+
+# Drops a table from cs496-g8 database (FOR TESTING / VALIDATION ONLY)
+# @param table	name of table to drop from cs496-g8 database
+def drop_table(table):
+
+	print 'Tables BEFORE:\n'
+	print execute('show tables;')
+	print '------------------------------------'
+	query = '''
+		SET FOREIGN_KEY_CHECKS=0;
+		DROP TABLE IF EXISTS `%s`;
+		''' % (table)
+
+	execute(query, False)
+	print 'Tables AFTER:\n'
+	print execute('show tables;')
+
 

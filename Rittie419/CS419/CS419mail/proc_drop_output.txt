@@ -1,23 +1,23 @@
-From do.not.reply@engr.orst.edu  Sun Feb  8 18:37:12 2015
+From do.not.reply@engr.orst.edu  Sun Mar  8 19:26:28 2015
 Return-Path: <do.not.reply@engr.orst.edu>
-Received: from flip1.engr.oregonstate.edu (flip1.engr.oregonstate.edu [128.193.54.226])
-	by zen.engr.oregonstate.edu (8.14.4/8.14.4) with ESMTP id t192bCiY014300
-	for <chuaprar@engr.orst.edu>; Sun, 8 Feb 2015 18:37:12 -0800
-Date: Sun, 8 Feb 2015 18:37:12 -0800
-Message-Id: <201502090237.t192bCiY014300@zen.engr.oregonstate.edu>
+Received: from flip3.engr.oregonstate.edu (flip3.engr.oregonstate.edu [128.193.54.10])
+	by zen.engr.oregonstate.edu (8.14.4/8.14.4) with ESMTP id t292QRUW027262;
+	Sun, 8 Mar 2015 19:26:27 -0700
+Date: Sun, 8 Mar 2015 19:26:27 -0700
+Message-Id: <201503090226.t292QRUW027262@zen.engr.oregonstate.edu>
 Content-Type: text/plain; charset="us-ascii"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 7bit
 From: do.not.reply@engr.orst.edu
-To: REDACTED@engr.orst.edu, chuaprar@engr.orst.edu
+To: rac42@cornell.edu, chuaprar@engr.orst.edu
 Cc: 
 Subject: Advising Signup Cancellation
 
 
-	Advising Signup with Chuaprasert, Rittie CANCELLED
-	Name: REDACTED
-	Email: REDACTED@engr.orst.edu
-	Date: Tuesday, March 10th, 2015
+	Advising Signup with Advisor Rittie CANCELLED
+	Name: Student 3
+	Email: rac42@cornell.edu
+	Date: Wednesday, March 11th, 2015
 	Time: 10:30AM - 11:45AM
 
 

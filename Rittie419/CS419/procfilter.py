@@ -14,7 +14,7 @@ from datetime import datetime
 import get_email, add_calendar, drop_calendar, send_conf_email
 import db_funcs
 from db_funcs import view_appt, add_appt, drop_appt
-DEMARC_KEY = 'Name: REDACTED'
+DEMARC_KEY = 'Name:'
 
 # ========================================================== #
 
@@ -31,10 +31,12 @@ def main():
 	# handle case of an appointment drop
 	if (is_drop):
 		handle_drop(email_msg)
+		print 'HANDLE_DROP'
 
 	# handle case of an appointment add
 	else:
 		handle_add(email_msg)
+		print 'HANDLE_ADD'
 
 # ========================================================== #
 def handle_drop(msg):
@@ -77,11 +79,11 @@ def handle_drop(msg):
 
 	# send Outlook calendar invite to advisor
 	drop_calendar.drop_calendar(db_adv, db_stud,
-		db_adv_email, dt_start, dt_end, uid)
+		db_adv_email, db_stud_email, dt_start, dt_end, uid)
 
-	# send confirmation email to student
-	send_conf_email.main(db_adv, db_stud, db_stud_email, 
-		dt_start, dt_end, 'CANCELLED')
+	# send confirmation email to student - NOT APPLICABLE
+	#send_conf_email.main(db_adv, db_stud, db_stud_email, 
+	#	dt_start, dt_end, 'CANCELLED')
 
 	return
 
@@ -127,7 +129,7 @@ def handle_add(msg):
 	db_adv = get_db_advisor_add(msg)
 	db_stud = get_db_student(msg)
 	db_adv_email = get_db_advisor_email(msg)
-	db_stud_email = get_db_student_email(db_stud)
+	db_stud_email = get_db_student_email(msg)
 	db_date = get_db_date(msg)
 	db_start = get_db_starttime(msg)
 	db_end = get_db_endtime(msg)
@@ -158,11 +160,11 @@ def handle_add(msg):
 
 	# send Outlook calendar invite to advisor
 	add_calendar.add_calendar(db_adv, db_stud,
-		db_adv_email, dt_start, dt_end, uid)
+		db_adv_email, db_stud_email, dt_start, dt_end, uid)
 
-	# send confirmation email to student
-	send_conf_email.main(db_adv, db_stud, db_stud_email, 
-		dt_start, dt_end, 'CONFIRMED')
+	# send confirmation email to student - NOT APPLICABLE
+	#send_conf_email.main(db_adv, db_stud, db_stud_email, 
+	#	dt_start, dt_end, 'CONFIRMED')
 
 	return
 # -------------------------------------------------- #
@@ -177,10 +179,20 @@ def get_db_student(msg):
 	key2 = 'Advising Signup'
 	student = findtext(msg, key1, key2)
 	return student
+
 # -------------------------------------------------- #
+# keys off the 2nd email address in the To: line
 def get_db_advisor_email(msg):
-	key1 = 'To: REDACTED@engr.orst.edu,'
+	key1 = 'To:'
 	key2 = 'Cc:'
+	emailaddrs = findtext(msg, key1, key2)
+	comma_tag = emailaddrs.find(',') + 1
+	emailaddr = emailaddrs[comma_tag:].strip()
+	return emailaddr
+# -------------------------------------------------- #
+def get_db_student_email(msg):
+	key1 = 'Email:'
+	key2 = 'Date:'
 	emailaddr = findtext(msg, key1, key2)
 	return emailaddr
 # 	------------------------------------------------
@@ -193,14 +205,7 @@ def findtext(msg, key1, key2):
 		text = '%s, %s' % (text[:tag3], text[tag3+1:].strip())
 	return text
 # -------------------------------------------------- #
-def get_db_student_email(student):
-	argv = []
-	argv.append(student)
-	print argv
-	emailaddr = get_email.main([student])
-	print emailaddr
-	return emailaddr
-# -------------------------------------------------- #
+
 # format = 'YYYY-MM-DD' e.g. 2015-03-10
 def get_db_date(msg):
 	date_sig = get_date_signature(msg)
@@ -252,8 +257,9 @@ def get_month_num(m):
 	return lookup[m]
 
 def get_day_num(d):
-	day_num = d[:len(d)-2]	# shaves off suffix 'st'|'nd'|'rd'|'th'
-	if len(d)==3:
+	# shaves off suffix 'st'|'nd'|'rd'|'th'
+	day_num = d.replace('st','').replace('nd','').replace('rd','').replace('th','')
+	if len(day_num)==1:
 		day_num = '0' + day_num
 	return day_num
 

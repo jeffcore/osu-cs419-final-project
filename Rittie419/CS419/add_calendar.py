@@ -14,12 +14,13 @@ from datetime import datetime
 CRLF = "\r\n"
 
 def add_calendar(
-	adv='Chuaprasert, Rittie', 
-	stud='Krull, Jared',
+	adv='Advisor Rittie', 
+	stud='Student Rittie',
 	adv_email='chuaprar@engr.orst.edu', 
+	stud_email='rac42@cornell.edu',
 	dt_start=datetime(2015,3,10,12,30),
 	dt_end=datetime(2015,3,10,13,45), 
-	uid='krullj@onid.orst.edu::2015-03-10::12:30'):
+	uid='rac42@cornell.edu::2015-03-10::12:30'):
 
 	# construct calendar header info
 	attendees = [adv_email]
@@ -36,9 +37,10 @@ def add_calendar(
 	dtstamp = datetime.now().strftime("%Y%m%dT%H%M%S")
 	dtstart = dt_start.strftime("%Y%m%dT%H%M%S")
 	dtend = dt_end.strftime("%Y%m%dT%H%M%S")
-	datetxt = dt_start.strftime("%A, %B %d, %Y")
-	starttxt = dt_start.strftime("%I:%M%p")
-	endtxt = dt_end.strftime("%I:%M%p")
+	datesuffix = get_date_suffix(int(dt_start.strftime("%d")))
+	datetxt = dt_start.strftime("%A, %B %d") + datesuffix + dt_start.strftime(", %Y")
+	starttxt = dt_start.strftime("%I:%M%p").replace('PM','pm').replace('AM','am')
+	endtxt = dt_end.strftime("%I:%M%p").replace('PM','pm').replace('AM','am')
 
 	# construct calendar item
 	ical = "BEGIN:VCALENDAR"+CRLF
@@ -54,7 +56,7 @@ def add_calendar(
 	ical+= "UID:FIXMEUID"+uid+CRLF
 	ical+= attendee+"CREATED:"+dtstamp+CRLF
 	ical+= description+"LAST-MODIFIED:"+dtstamp+CRLF
-	ical+= "LOCATION:"+CRLF
+	ical+= "LOCATION: Student to contact Advisor"+CRLF
 	ical+= "SEQUENCE:0"+CRLF
 	ical+= "STATUS:CONFIRMED"+CRLF
 	ical+= "SUMMARY:Advisor Signup with %s confirmed for %s" % (adv, stud)+CRLF
@@ -70,10 +72,15 @@ def add_calendar(
 	msg['From'] = fro
 	msg['To'] = ",".join(attendees)
 	eml_body = 	body = '''
-	Advising Signup with %s confirmed for %s
-	Date: %s
-	Time: %s - %s
-	''' % (adv, stud, datetxt, starttxt, endtxt)
+	<br>Advising Signup with %s confirmed
+	<br>Name: %s
+	<br>Email: %s
+	<br>Date: %s
+	<br>Time: %s - %s
+
+
+	<br><br><br>Please contact support@engr.oregonstate.edu if you experience problems
+	''' % (adv, stud, stud_email, datetxt, starttxt, endtxt)
 
 	# declare multipart structure and content info
 	msgAlternative = MIMEMultipart('alternative')
@@ -87,7 +94,7 @@ def add_calendar(
 	ical_atch.add_header('Content-Disposition', 'attachment; filename="%s"'%("invite.ics"))
 
 	#	email content info
-	part_email = MIMEText(eml_body,"html")
+	part_email = MIMEText(eml_body,'html')
 	eml_atch = MIMEBase('text/plain','')
 	Encoders.encode_base64(eml_atch)
 	eml_atch.add_header('Content-Transfer-Encoding', "")
@@ -105,3 +112,15 @@ def add_calendar(
 
 	mailServer.sendmail(fro, attendees, msg.as_string())
 	mailServer.close()
+
+def get_date_suffix(d):
+	lookup = {
+		1:'st',	2:'nd',	3:'rd',	4:'th',	5:'th',
+		6:'th',	7:'th',	8:'th',	9:'th',	10:'th',
+		11:'th',12:'th',13:'th',14:'th',15:'th',
+		16:'th',17:'th',18:'th',19:'th',20:'th',
+		21:'st',22:'nd',23:'rd',24:'th',25:'th',
+		26:'th',27:'th',28:'th',29:'th',30:'th',31:'st'
+	}
+	return lookup[d]
+
