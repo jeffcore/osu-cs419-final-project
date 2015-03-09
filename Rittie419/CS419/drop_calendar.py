@@ -14,12 +14,13 @@ from datetime import datetime
 CRLF = "\r\n"
 
 def drop_calendar(
-	adv='Chuaprasert, Rittie', 
-	stud='Krull, Jared',
+	adv='Advisor Rittie', 
+	stud='Student Rittie',
 	adv_email='chuaprar@engr.orst.edu', 
+	stud_email='rac42@cornell.edu',
 	dt_start=datetime(2015,3,10,12,30),
 	dt_end=datetime(2015,3,10,13,45), 
-	uid='krullj@onid.orst.edu::2015-03-10::12:30'):
+	uid='rac42@cornell.edu::2015-03-10::12:30'):
 
 	# construct calendar header info
 	attendees = [adv_email]
@@ -75,10 +76,15 @@ def drop_calendar(
 	msg['From'] = fro
 	msg['To'] = ",".join(attendees)
 	eml_body = 	body = '''
-	Advising Signup with %s CANCELLED
-	Date: %s
-	Time: %s - %s
-	''' % (adv, datetxt, starttxt, endtxt)
+	<br>Advising Signup with %s CANCELLED
+	<br>Name: %s
+	<br>Email: %s
+	<br>Date: %s
+	<br>Time: %s - %s
+
+
+	<br><br><br>Please contact support@engr.oregonstate.edu if you experience problems
+	''' % (adv, stud, stud_email, datetxt, starttxt, endtxt)
 	print eml_body
 
 	# declare multipart structure and content info

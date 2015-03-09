@@ -1,4 +1,4 @@
-from db_funcs import view_appt, add_appt, drop_appt
+from db_funcs import view_appt, add_appt, drop_appt, new_table, drop_table
 from db_funcs import is_repeat, get_unique_id
 
 import add_appt, drop_appt
@@ -13,31 +13,54 @@ from datetime import datetime
 
 #add_appt.main()
 '''
-add_appt.main('Chuaprasert, Rittie', 
-	'Rix, Jeffrey Allan',
+add_appt.main('Advisor Rittie2', 
 	'chuaprar@engr.orst.edu', 
+	'Student Rittie2',
+	'rittie@alumni-gsb.stanford.edu',
 	datetime(2015,3,10,13,30),
 	datetime(2015,3,10,14,45))
 '''
-
-add_appt.main('Advisor Rittie', 
-	'Chuaprasert, Rittie',
+'''
+drop_appt.main('Advisor Rittie2', 
 	'chuaprar@engr.orst.edu', 
+	'Student Rittie2',
+	'rittie@alumni-gsb.stanford.edu',
+	datetime(2015,3,10,13,30),
+	datetime(2015,3,10,14,45))
+'''
+'''
+add_appt.main('Advisor Rittie', 
+	'chuaprar@engr.orst.edu', 
+	'Student Rittie',
+	'rac42@cornell.edu',
 	datetime(2015,3,10,10,30),
 	datetime(2015,3,10,11,45))
-
-'''
-drop_appt.main('Chuaprasert, Rittie', 
-	'chuaprar@engr.orst.edu', 
-	datetime(2015,3,10,13,30),
-	datetime(2015,3,10,14,45))
 '''
 '''
 drop_appt.main('Advisor Rittie', 
 	'chuaprar@engr.orst.edu', 
+	'Student Rittie',
+	'rac42@cornell.edu',
 	datetime(2015,3,10,10,30),
 	datetime(2015,3,10,11,45))
 '''
+
+add_appt.main('Advisor Rittie', 
+	'chuaprar@engr.orst.edu', 
+	'Student 3',
+	'rac42@cornell.edu',
+	datetime(2015,3,11,10,30),
+	datetime(2015,3,11,11,45))
+
+'''
+drop_appt.main('Advisor Rittie', 
+	'chuaprar@engr.orst.edu', 
+	'Student 3',
+	'rac42@cornell.edu',
+	datetime(2015,3,11,10,30),
+	datetime(2015,3,11,11,45))
+'''
+
 #add_calendar.add_calendar()
 '''
 drop_calendar.drop_calendar('Chuaprasert, Rittie', 
@@ -78,6 +101,11 @@ print get_time_signature(msg)
 
 
 #####-----<DATABASE TESTS>--------------------#####
+#	 create blank table in database
+#new_table('new_table_test')
+#new_table('appointment')
+# 	drop a database table
+#drop_table('new_table_test')
 # <---------------------------------------------> #
 #print view_appt()
 # <---------------------------------------------> #

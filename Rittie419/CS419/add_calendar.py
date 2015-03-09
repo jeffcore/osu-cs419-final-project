@@ -14,12 +14,13 @@ from datetime import datetime
 CRLF = "\r\n"
 
 def add_calendar(
-	adv='Chuaprasert, Rittie', 
-	stud='Krull, Jared',
+	adv='Advisor Rittie', 
+	stud='Student Rittie',
 	adv_email='chuaprar@engr.orst.edu', 
+	stud_email='rac42@cornell.edu',
 	dt_start=datetime(2015,3,10,12,30),
 	dt_end=datetime(2015,3,10,13,45), 
-	uid='krullj@onid.orst.edu::2015-03-10::12:30'):
+	uid='rac42@cornell.edu::2015-03-10::12:30'):
 
 	# construct calendar header info
 	attendees = [adv_email]
@@ -54,7 +55,7 @@ def add_calendar(
 	ical+= "UID:FIXMEUID"+uid+CRLF
 	ical+= attendee+"CREATED:"+dtstamp+CRLF
 	ical+= description+"LAST-MODIFIED:"+dtstamp+CRLF
-	ical+= "LOCATION:"+CRLF
+	ical+= "LOCATION: Student to contact Advisor"+CRLF
 	ical+= "SEQUENCE:0"+CRLF
 	ical+= "STATUS:CONFIRMED"+CRLF
 	ical+= "SUMMARY:Advisor Signup with %s confirmed for %s" % (adv, stud)+CRLF
@@ -70,10 +71,15 @@ def add_calendar(
 	msg['From'] = fro
 	msg['To'] = ",".join(attendees)
 	eml_body = 	body = '''
-	Advising Signup with %s confirmed for %s
-	Date: %s
-	Time: %s - %s
-	''' % (adv, stud, datetxt, starttxt, endtxt)
+	<br>Advising Signup with %s confirmed
+	<br>Name: %s
+	<br>Email: %s
+	<br>Date: %s
+	<br>Time: %s - %s
+
+
+	<br><br><br>Please contact support@engr.oregonstate.edu if you experience problems
+	''' % (adv, stud, stud_email, datetxt, starttxt, endtxt)
 
 	# declare multipart structure and content info
 	msgAlternative = MIMEMultipart('alternative')
@@ -87,7 +93,7 @@ def add_calendar(
 	ical_atch.add_header('Content-Disposition', 'attachment; filename="%s"'%("invite.ics"))
 
 	#	email content info
-	part_email = MIMEText(eml_body,"html")
+	part_email = MIMEText(eml_body,'html')
 	eml_atch = MIMEBase('text/plain','')
 	Encoders.encode_base64(eml_atch)
 	eml_atch.add_header('Content-Transfer-Encoding', "")
