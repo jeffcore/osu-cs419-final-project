@@ -257,8 +257,9 @@ def get_month_num(m):
 	return lookup[m]
 
 def get_day_num(d):
-	day_num = d[:len(d)-2]	# shaves off suffix 'st'|'nd'|'rd'|'th'
-	if len(d)==3:
+	# shaves off suffix 'st'|'nd'|'rd'|'th'
+	day_num = d.replace('st','').replace('nd','').replace('rd','').replace('th','')
+	if len(day_num)==1:
 		day_num = '0' + day_num
 	return day_num
 

@@ -37,9 +37,10 @@ def drop_calendar(
 	dtstamp = datetime.now().strftime("%Y%m%dT%H%M%S")
 	dtstart = dt_start.strftime("%Y%m%dT%H%M%S")
 	dtend = dt_end.strftime("%Y%m%dT%H%M%S")
-	datetxt = dt_start.strftime("%A, %B %d, %Y")
-	starttxt = dt_start.strftime("%I:%M%p")
-	endtxt = dt_end.strftime("%I:%M%p")
+	datesuffix = get_date_suffix(int(dt_start.strftime("%d")))
+	datetxt = dt_start.strftime("%A, %B %d") + datesuffix + dt_start.strftime(", %Y")
+	starttxt = dt_start.strftime("%I:%M%p").replace('PM','pm').replace('AM','am')
+	endtxt = dt_end.strftime("%I:%M%p").replace('PM','pm').replace('AM','am')
 
 	# construct calendar item
 	ical = "BEGIN:VCALENDAR"+CRLF
@@ -117,3 +118,15 @@ def drop_calendar(
 
 	mailServer.sendmail(fro, attendees, msg.as_string())
 	mailServer.close()
+
+def get_date_suffix(d):
+	lookup = {
+		1:'st',	2:'nd',	3:'rd',	4:'th',	5:'th',
+		6:'th',	7:'th',	8:'th',	9:'th',	10:'th',
+		11:'th',12:'th',13:'th',14:'th',15:'th',
+		16:'th',17:'th',18:'th',19:'th',20:'th',
+		21:'st',22:'nd',23:'rd',24:'th',25:'th',
+		26:'th',27:'th',28:'th',29:'th',30:'th',31:'st'
+	}
+	return lookup[d]
+

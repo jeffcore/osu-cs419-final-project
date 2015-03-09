@@ -8,12 +8,12 @@ def main(advisor='Chuaprasert, Rittie',
 	stud_email='chuaprar@onid.orst.edu', 
 	dt_start=datetime(2015,3,10,12,30),
 	dt_end=datetime(2015,3,10,13,45),
-	mtg_type = 'CONFIRMED'):
+	mtg_type = 'CANCELLED'):
 
 	mtg_type = 'CONFIRMED' if (mtg_type == 'CONFIRMED') else 'CANCELLED'
 
 	# prepare for date and time signatures	
-	datetxt = dt_start.strftime("%A, %B %dth, %Y")
+	datetxt = dt_start.strftime("%A, %B %d, %Y")
 	starttxt = dt_start.strftime("%I:%M%p")
 	endtxt = dt_end.strftime("%I:%M%p")
 
