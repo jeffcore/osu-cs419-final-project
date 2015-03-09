@@ -12,6 +12,7 @@ import db_funcs
 import procfilter
 import datetime
 import drop_appt
+import send_conf_email
 import drop_calendar, send_conf_email
 import mysql.connector
 import curses.panel 
@@ -159,8 +160,6 @@ def display_appointments(stdscr, data, appt_num, lines_for_appt_display, appt_se
         stdscr.addstr('Displaying ' + str(display_start_row) + ' to ' + str(display_end_row) + ' of ' + str(appt_total_number) + ' appointments', curses.A_BOLD)      
     else:
         stdscr.addstr('You don\'t have any appointments.', curses.A_BOLD)      
-  
-    
     
     return appt_selected
  
@@ -273,6 +272,7 @@ def handle_drop(appointment):
     db_end = str(appointment[4])
     db_stud = appointment[1]
     db_stud_email = appointment[7]
+    mtg_type = 'CANCELLED'
     
     # create unique id
     uid = db_adv_email + '::' + db_date + '::' + db_start  
@@ -282,8 +282,11 @@ def handle_drop(appointment):
     dt_end = datetime.datetime.strptime(db_date + ' ' + db_end, '%Y-%m-%d %H:%M:%S')
         
     # send Outlook calendar invite to advisor    
-    #drop_appt.main(db_adv, db_adv_email, dt_start, dt_end)
-    drop_calendar.drop_calendar(db_adv, db_stud, db_adv_email, dt_start, dt_end, uid)
+    # drop_appt.main(db_adv, db_adv_email, dt_start, dt_end)
+    drop_calendar.drop_calendar(db_adv, db_stud, db_adv_email, db_stud_email, dt_start, dt_end, uid)
+    # send email to astucent
+    send_conf_email.main(db_adv, db_stud, db_stud_email, dt_start, dt_end, mtg_type)
+    #delete appointment from DB
     db_funcs.drop_appt_by_id(db_uid)
       
     return
@@ -301,7 +304,7 @@ def main():
         lines_used_for_action_input = 1
         lines_for_appt_display = scrsize[0] - lines_used_not_for_appt   # number of total rows - non appt rows
         line_start_action_input = scrsize[0] - lines_used_for_action_input  #row number to start displaying input section
-        #Turn off echoing of keys
+        #Turn off echoing of  keys
         # enter cbreak mode
         curses.noecho()
         curses.cbreak()
@@ -345,8 +348,7 @@ def main():
                         f = open('error.txt', 'w')
                         f.write(str(inst)) 
                         f.close()
-                        stdscr.deleteln()
-                        stdscr.addstr(line_start_action_input+2, 10, "Invalid number")                  
+                        # stdscr.deleteln()                       
             else:
                 break
         
