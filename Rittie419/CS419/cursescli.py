@@ -135,9 +135,10 @@ def display_appointments(stdscr, data, appt_num, lines_for_appt_display, appt_se
     f.close()
    
     # display appointments
-    stdscr.addstr("ID\tStudent Name\t\tAppt Date\tStart Time\tEnd Time\n", g)  
+    stdscr.addstr("No\tStudent Name\t\tAppt Date\tStart Time\tEnd Time\n", g)  
     for row in data:      
-        row_text = str(row[0]) + "\t"   # appoint id
+        #row_text = str(row[0]) + "\t"   # appoint id
+        row_text = str(x) + "\t" 
         row_text += row[1] + "\t"       # student name
         if len(row[1]) < 16:            # add extra tab if string length is to short
             row_text += "\t"    
