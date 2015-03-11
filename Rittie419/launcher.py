@@ -19,7 +19,7 @@ running = True
 while running:
 	print "\nWelcome to Group 8's Advising System Project!"
 	print "Choose an option:\n\t1 Initial setup or Check configuration\n\t2 To run CLI\n\t3 To exit"
-	print "Note, the system will not function if initial setup has not been completed."
+	print "Note, the system will not function properly if initial setup has not been completed."
 	menu_selection = raw_input("Choose 1, 2, or 3: ")
 	print "Choice was .... ", menu_selection
 
@@ -40,8 +40,9 @@ while running:
 			print "**********.procmailrc Message**********"
 			print "Creating the required .procmailrc file..."
 			
+			userEmail = raw_input("Enter an email for forwarding: ")
 			f = open('.procmailrc','w+')
-			f.write(":0 fW:\n* ^From[: ].*do.not.reply@engr.orst.edu\n* ^Subject:.*Advising Signup\n| python ~/CS419/procfilter.py\n\n:0\n* ^From[: ].*do.not.reply@engr.orst.edu\n* ^Subject:.*Advising Signup\n/dev/null")
+			f.write("# A default .procmailrc file\n# See http://engr.oregonstate.edu/computing/email/90\n\n# Include the standard spam filter\nINCLUDERC=/usr/local/etc/procmail/standard.rc\n\n:0 fW:\n* ^From[: ].*do.not.reply@engr.orst.edu\n* ^Subject:.*Advising Signup\n| python ~/CS419/procfilter.py\n\n:0\n* ^From[: ].*do.not.reply@engr.orst.edu\n* ^Subject:.*Advising Signup\n/dev/null\n\n" + "# for other mail, forward everything\n:0\n* ^[a-zA-Z]+\n! " + userEmail)
 			f.close()
 		
 			if os.path.isfile(procfile):
