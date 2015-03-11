@@ -1,0 +1,30 @@
+---Non-Installation Portion, just for replication---
+* Added the CS419 folder and contents and launcher.py to my main directory
+* command: tar -jcvf group8_project.tar.bz2 CS419 launcher.py
+
+
+======Installation=============
+1. The tar.bz2 file needs to be placed in the user's main directory
+2. The user will enter command "tar -jxvf group8_project.tar.bz2"
+	* This will place the required CS419 directory and the launcher.py file into the user's main directory
+3. From main directory, user will run command "python launcher.py"
+4. Program will open and the user should choose a valid menu option:
+	* Option 1 - This will check for a .procmailrc file, and create one if needed. This will also check for a .forward file, and instruct the user how to handle it.
+		+ The .procmailrc must contain two rules for the user's advising system to function. It is recommended that the rules be first two rules in the .procmailrc file. The order of the rules in the file matters and will impact functionality. This option does NOT check the .procmailrc file for specific rules, it only checks for existence of the file. The rules are:
+			:0 fW:
+			* ^From[: ].*do.not.reply@engr.orst.edu
+			* ^Subject:.*Advising Signup
+			| python ~/CS419/procfilter.py
+
+
+			:0
+			* ^From[: ].*do.not.reply@engr.orst.edu
+			* ^Subject:.*Advising Signup
+			/dev/null
+
+		+ A .forward file in the user's main directory will interfere with the system, and prevent proper functionality. If a .forward file exists the user should:
+			1. Remove it
+			2. Move it to a different directory
+			3. Rename it
+	* Option 2 - Launch the command line interface.
+	* Option 3 - Exit the launcher.
