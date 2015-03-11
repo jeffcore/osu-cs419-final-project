@@ -234,7 +234,7 @@ def return_date(sig):
 	month = get_month_num(raw_month)
 	day = get_day_num(raw_day)
 	date = '%s-%s-%s' % (year, month, day)
-	print date
+#	print date
 
 	return date
 
@@ -297,11 +297,11 @@ def return_time(sig, index):
 	h = int(raw_time[:colon])
 	minutes = raw_time[colon+1:colon+3]
 	am_pm = raw_time[colon+3:]
-	print "raw_tim '%s' am_pm '%s'" % (raw_time, am_pm)
+	#print "raw_tim '%s' am_pm '%s'" % (raw_time, am_pm)
 	h = (h + 12) if (('pm' in am_pm) or ('PM' in am_pm)) else h
 	hour = ('0' + str(h)) if (h<10) else str(h)
 	time = '%s:%s' % (hour, minutes)
-	print time
+	#print time
 
 	return time
 

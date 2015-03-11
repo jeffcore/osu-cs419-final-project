@@ -39,8 +39,8 @@ def drop_calendar(
 	dtend = dt_end.strftime("%Y%m%dT%H%M%S")
 	datesuffix = get_date_suffix(int(dt_start.strftime("%d")))
 	datetxt = dt_start.strftime("%A, %B %d") + datesuffix + dt_start.strftime(", %Y")
-	starttxt = dt_start.strftime("%I:%M%p").replace('PM','pm').replace('AM','am')
-	endtxt = dt_end.strftime("%I:%M%p").replace('PM','pm').replace('AM','am')
+	starttxt = dt_start.strftime("%I:%M%p").replace('PM','pm').replace('AM','am').lstrip('0')
+	endtxt = dt_end.strftime("%I:%M%p").replace('PM','pm').replace('AM','am').lstrip('0')
 
 	# construct calendar item
 	ical = "BEGIN:VCALENDAR"+CRLF
