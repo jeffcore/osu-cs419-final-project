@@ -50,17 +50,17 @@ while running:
 			else:
 				print "Something went wrong with creating the .procmailrc file!"
 			
-		if os.path.isfile(forward_file):
-			print"\n**********.forward Message**********"
-			print "Your main directory contains a .forward file.\nThis will interfere with the advising system.\nYou should either\n\t1. Remove it\n\t2. Move it to a different location\n\t3.Rename the file."
+		#if os.path.isfile(forward_file):
+			#print"\n**********.forward Message**********"
+			#print "Your main directory contains a .forward file.\nThis will interfere with the advising system.\nYou should either\n\t1. Remove it\n\t2. Move it to a different location\n\t3.Rename the file."
 			
 	elif menu_selection == '2':
 		if os.path.isfile(procfile):
-			if not os.path.isfile(forward_file):
+			#if not os.path.isfile(forward_file):
 				#print "CLI Option"
 				cursescli.main()
-			else:
-				print "*****Warning!*****\nThe .forward file will prevent proper functioning of the system."
+			#else:
+				#print "*****Warning!*****\nThe .forward file will prevent proper functioning of the system."
 		else:
 			print "*****No .procmail file found!*****\nRun option 1 from the main menu."
 		
