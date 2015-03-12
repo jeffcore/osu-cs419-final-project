@@ -16,7 +16,7 @@ import send_conf_email
 import drop_calendar, send_conf_email
 import mysql.connector
 import curses.panel 
-
+ 
 from mysql.connector import errorcode
 
 # Creates and returns database connection
@@ -42,9 +42,9 @@ def get_appointments_list(cnx, email):
     cursor = cnx.cursor()
     query = (
         "SELECT id, student_name, appointment_date,appointment_start_time,appointment_end_time,"  
-        "advisor_name, advisor_email, student_email FROM temp WHERE advisor_email = (%s)"
+        "advisor_name, advisor_email, student_email FROM temp"
     ) 
-    cursor.execute(query, (email,))
+    cursor.execute(query)
     data = cursor.fetchall()       
     cnx.commit()
     cursor.close()
@@ -66,25 +66,15 @@ def display_main_screen(cnx, stdscr, email):
     else:
         while True:        
             stdscr.addstr(0, 0, "Welcome to Advisor Appointment CLI!\n")    
-            if error:                
-                stdscr.addstr(1,0,"Error: no appointments found for user.\n")   
-            else:
-                stdscr.addstr("\n")
-       
-            stdscr.addstr(2,0,"Type In Your OSU email: ")            
-            curses.echo()
-            email = stdscr.getstr(2,24,30)            
+           
+            # stdscr.addstr(2,0,"Type In Your OSU email: ")            
+            #curses.echo()
+            # email = stdscr.getstr(2,24,30)            
       
-            data = get_appointments_list(cnx, email) # and email variable here
+            data = get_appointments_list(cnx, None) # and email variable here
             rowcount = len(data)
-            
-            if rowcount == 0: 
-                error = True
-                email = ""
-                stdscr.clear()
-            else:
-                break
-        
+            break
+                   
         stdscr.clear()
     return data, email
 
@@ -322,7 +312,7 @@ def main():
             data, email = display_main_screen(cnx, stdscr, email)
 
             stdscr.addstr(0, 0, "Welcome to Advisor Appointment CLI!\n")    
-            stdscr.addstr(2,0, "Appointments for " + email + "\n")    
+            stdscr.addstr(2,0, "Your Appointments\n")    
             
             # display appointments         
             appt_selected = display_appointments(stdscr, data, appt_num, lines_for_appt_display, appt_selected)  
