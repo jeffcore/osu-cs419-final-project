@@ -265,7 +265,7 @@ def handle_drop(appointment):
     mtg_type = 'CANCELLED'
     
     # create unique id
-    uid = db_adv_email + '::' + db_date + '::' + db_start  
+    uid = db_stud_email + '::' + db_date + '::' + db_start  
     
     # prepare datetime info
     dt_start = datetime.datetime.strptime(db_date + ' ' + db_start, '%Y-%m-%d %H:%M:%S')
