@@ -76,8 +76,8 @@ def drop_appt_by_id(unique_id, table = DEFAULT_TABLE):
 		DELETE FROM %s WHERE
 			('id'=%s);
 	''' % (table, str(unique_id))
-	print query
-	print execute(query)	
+	query
+	execute(query)	
 
 	return         
         
@@ -93,9 +93,9 @@ def drop_appt(date, start, table = DEFAULT_TABLE):
 		DELETE FROM %s WHERE
 			('appointment_date'="%s" AND 'appointment_start_time'="%s");
 	''' % (table, date, start)
-	print query
-	print execute(query)
-	print execute('SELECT * FROM %s;' % (table))
+	query
+	execute(query)
+	#print execute('SELECT * FROM %s;' % (table))
 
 	return unique_id
 
