@@ -34,11 +34,10 @@ def create_db_connection():
 		
     return cnx
 
-# Queries database and returns list of appointments by email address
+# Queries database and returns list of appointments
 # @param  database connection
-# @param email address of advisor
-# @return list of appointments by email address
-def get_appointments_list(cnx, email):
+# @return list of appointments
+def get_appointments_list(cnx):
     cursor = cnx.cursor()
     query = (
         "SELECT id, student_name, appointment_date,appointment_start_time,appointment_end_time,"  
@@ -50,42 +49,14 @@ def get_appointments_list(cnx, email):
     cursor.close()
     
     return data
-    
-# Display the header of the screen and receives email input from user
-# @param  database connection
-# @param  curses screen
-# @param email address of advisor
-# @return list of appointments by email address
-# @return the email address of the advisor
-def display_main_screen(cnx, stdscr, email):    
-    error = False
-    data = None
-    
-    if email:
-         data = get_appointments_list(cnx, email) # and email variable here
-    else:
-        while True:        
-            stdscr.addstr(0, 0, "Welcome to Advisor Appointment CLI!\n")    
-           
-            # stdscr.addstr(2,0,"Type In Your OSU email: ")            
-            #curses.echo()
-            # email = stdscr.getstr(2,24,30)            
-      
-            data = get_appointments_list(cnx, None) # and email variable here
-            rowcount = len(data)
-            break
-                   
-        stdscr.clear()
-    return data, email
 
 # Displays the list of appointments on the screen
-# @param  curses screen
-# @param  list of appointments data
-# @param  appointment id of appointment deleted - used to display verification of deletion
-# @param  size of height of screen available to display appointments
-# @param  the current row number of the selected appointment - first row is 1
+# @param  stdscr                    curses screen
+# @param  data                      list of appointments data
+# @param  lines_for_appt_display    size of height of screen available to display appointments
+# @param  appt_selected             the current row number of the selected appointment - first row is 1
 # @return the current row number of the selected appointment - first row is 1
-def display_appointments(stdscr, data, appt_num, lines_for_appt_display, appt_selected):
+def display_appointments(stdscr, data, lines_for_appt_display, appt_selected):
     # display appointments 
     # set highlight and normal colors
     curses.start_color()
@@ -107,7 +78,7 @@ def display_appointments(stdscr, data, appt_num, lines_for_appt_display, appt_se
     if appt_selected < 1:    # highlight will stop at first row
         selected_row = 1 
         appt_selected = 1
-    elif appt_selected > lines_for_appt_display: # highlight if selected row it over display lines
+    elif appt_selected > lines_for_appt_display: # highlight of selected row it over display lines
         if appt_selected <= appt_total_number:
             selected_row = appt_selected                           
         elif appt_selected > appt_total_number:   # highlight will stop at last row
@@ -115,15 +86,15 @@ def display_appointments(stdscr, data, appt_num, lines_for_appt_display, appt_se
             appt_selected = appt_total_number          
         display_start_row = (appt_selected - lines_for_appt_display) + 1
         display_end_row = appt_selected 
-    else:
+    else:   # selected row under number of displayed lines
         if appt_selected > appt_total_number:     
-            appt_selected -= 1 
+            appt_selected = appt_total_number
             selected_row = appt_selected  
         else:
             selected_row = appt_selected  
-    f = open('page.txt', 'a')
-    f.write('total appt ' + str(appt_total_number) + ' appt selected ' + str(appt_selected) + ' selected row  ' + str(selected_row) + ' start row' + str(display_start_row) + ' end row' + str(display_end_row) +'\n') 
-    f.close()
+    # f = open('page.txt', 'a')
+    # f.write('total appt ' + str(appt_total_number) + ' appt selected ' + str(appt_selected) + ' selected row  ' + str(selected_row) + ' start row' + str(display_start_row) + ' end row' + str(display_end_row) +'\n') 
+    # f.close()
    
     # display appointments
     stdscr.addstr("No\tStudent Name\t\tAppt Date\tStart Time\tEnd Time\n", g)  
@@ -168,7 +139,7 @@ def get_appointment_number(stdscr, line_start_action_input, appt_selected):
     # get green text color pair
     g = curses.color_pair(2)
     #get action from user
-    stdscr.addstr(line_start_action_input,0, "Up/Down Arrow to Select | d to Delete | q to Quit | r to Refresh", g)   
+    stdscr.addstr(line_start_action_input,0, "Up/Down Arrow to Select | d or DEL to Delete | q to Quit | r to Refresh", g)   
     input = ""
     quit = False
     cursor_location = 0
@@ -179,8 +150,8 @@ def get_appointment_number(stdscr, line_start_action_input, appt_selected):
             input = chr(event)  
             quit = True
             break
-        elif event == ord("d") or event == ord("D"): 
-            input = chr(event)  
+        elif event == ord("d") or event == ord("D") or event == curses.KEY_DC: 
+            input = "d"  
             break            
         elif event == ord("r") or event == ord("R"): 
             input = chr(event)  
@@ -259,31 +230,36 @@ def handle_drop(appointment):
     db_adv_email = appointment[6]
     db_date = str(appointment[2])
     db_start = str(appointment[3])
+    db_start_raw = appointment[3]
     db_end = str(appointment[4])
     db_stud = appointment[1]
     db_stud_email = appointment[7]
     mtg_type = 'CANCELLED'
     
-    # create unique id
-    uid = db_stud_email + '::' + db_date + '::' + db_start  
-    
-    # prepare datetime info
-    dt_start = datetime.datetime.strptime(db_date + ' ' + db_start, '%Y-%m-%d %H:%M:%S')
-    dt_end = datetime.datetime.strptime(db_date + ' ' + db_end, '%Y-%m-%d %H:%M:%S')
-        
-    # send Outlook calendar invite to advisor    
-    # drop_appt.main(db_adv, db_adv_email, dt_start, dt_end)
-    drop_calendar.drop_calendar(db_adv, db_stud, db_adv_email, db_stud_email, dt_start, dt_end, uid)
-    # send email to astucent
-    send_conf_email.main(db_adv, db_stud, db_stud_email, dt_start, dt_end, mtg_type)
+    # reformat time field to remove seconds
+    start_time = db_start.split(':')
+    db_start_formatted = start_time[0] + ':' + start_time[1]
+    end_time = db_end.split(':')
+    db_end_formatted = start_time[0] + ':' + start_time[1]
+     
     #delete appointment from DB
-    db_funcs.drop_appt_by_id(db_uid)
+    uid = db_funcs.drop_appt(db_date, db_start_formatted)
+    
+    # send Outlook calendar drop appointment email to advisor    
+    dt_start = datetime.datetime.strptime(db_date + ' ' + db_start_formatted, '%Y-%m-%d %H:%M')
+    dt_end = datetime.datetime.strptime(db_date + ' ' + db_end_formatted, '%Y-%m-%d %H:%M')
+    drop_calendar.drop_calendar(db_adv, db_stud, db_adv_email, db_stud_email, dt_start, dt_end, uid)
+    
+    # send email to student   
+    send_conf_email.main(db_adv, db_stud, db_stud_email, dt_start, dt_end, mtg_type)
+        
+    #delete appointment from DB
+    #db_funcs.drop_appt_by_id(db_uid)
       
     return
         
 def main():
     cnx = create_db_connection()  # create db connection for displaying list of appointments
-    email = ""      # store the email used to retrieve appointments
     appt_num = 0    # appointment id of the appointment deleted used to display verification of deletion  
     appt_selected = 1  # used to keep track of which appointment row is highlighted : 1 = row one of list
     try:
@@ -308,23 +284,21 @@ def main():
             # set appointment data to none 
             data = None
             
-            # load top of screen includes email search
-            data, email = display_main_screen(cnx, stdscr, email)
-
-            stdscr.addstr(0, 0, "Welcome to Advisor Appointment CLI!\n")    
+            # gets list of appointments
+            data =  get_appointments_list(cnx) 
+            
+            # print header text
+            stdscr.addstr(0, 0, "Welcome to Advisor Appointment CLI!")    
             stdscr.addstr(2,0, "Your Appointments\n")    
             
             # display appointments         
-            appt_selected = display_appointments(stdscr, data, appt_num, lines_for_appt_display, appt_selected)  
+            appt_selected = display_appointments(stdscr, data, lines_for_appt_display, appt_selected)  
             
             # get user command input - returns command, row number selected, if quit was selected 
             # appt_selected - function adjusts row highlighted based on up/down arrow being clicked
             input, appt_selected, quit = get_appointment_number(stdscr, line_start_action_input, appt_selected)       
           
-            if not quit:
-                #display input on screen - not sure if I need this
-                #stdscr.addstr(input)   
-                
+            if not quit:                
                 # check for delete input
                 if input == "d" or input == 'd':
                     try:                                                           
@@ -333,12 +307,12 @@ def main():
                         # show popup box to verify deletion
                         if verify_deletion(stdscr,appt_selected,scrsize[0]):
                             handle_drop(appointment)       
-                            appt_selected = 1     
+                            appt_selected = 1                       
                     except Exception as inst:                                             
                         f = open('error.txt', 'w')
                         f.write(str(inst)) 
                         f.close()
-                        # stdscr.deleteln()                       
+                        # stdscr.deleteln()                   
             else:
                 break
         
