@@ -22,9 +22,9 @@
 			* ^Subject:.*Advising Signup
 			/dev/null
 
-		+ A .forward file in the user's main directory will interfere with the system, and prevent proper functionality. If a .forward file exists the user should:
-			1. Remove it
-			2. Move it to a different directory
-			3. Rename it
+		+ A .forward file in the user's main directory will interfere with the system and prevent proper functionality. If a .forward file exists the user should remove it from the directory.
+			- Email forwarding can be removed and added at any time via TEACH.
+			- A user can later reset all the the .(dot)files at any time via TEACH by using the "Reset UNIX Config Files".
 	* Option 2 - Launch the command line interface.
+		+ A check for a .forward file is performed when this option is selected. Information about how the user should handle the .forward file can be found in part 4.
 	* Option 3 - Exit the launcher.
