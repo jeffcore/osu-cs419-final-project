@@ -76,7 +76,7 @@ def drop_appt_by_id(unique_id, table = DEFAULT_TABLE):
 		DELETE FROM %s WHERE
 			('id'=%s);
 	''' % (table, str(unique_id))
-	query
+	#print query
 	execute(query)	
 
 	return         
