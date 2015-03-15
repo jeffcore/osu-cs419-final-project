@@ -230,7 +230,6 @@ def handle_drop(appointment):
     db_adv_email = appointment[6]
     db_date = str(appointment[2])
     db_start = str(appointment[3])
-    db_start_raw = appointment[3]
     db_end = str(appointment[4])
     db_stud = appointment[1]
     db_stud_email = appointment[7]
@@ -240,7 +239,7 @@ def handle_drop(appointment):
     start_time = db_start.split(':')
     db_start_formatted = start_time[0] + ':' + start_time[1]
     end_time = db_end.split(':')
-    db_end_formatted = start_time[0] + ':' + start_time[1]
+    db_end_formatted = end_time[0] + ':' + end_time[1]
      
     #delete appointment from DB
     uid = db_funcs.drop_appt(db_date, db_start_formatted)
