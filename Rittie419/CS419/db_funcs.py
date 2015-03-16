@@ -14,6 +14,9 @@ from sql_cmd import execute
 
 DEFAULT_TABLE = "'appointment'"
 
+def get_table_name():
+	return DEFAULT_TABLE
+
 # Returns all the data in the database
 def view_appt(table = DEFAULT_TABLE):
 	query = 'SELECT * FROM %s' % (table)
@@ -168,9 +171,9 @@ def new_table(table):
 		`student_name` varchar(100),
 		`advisor_email` varchar(100),
 		`student_email` varchar(100),
-		`appt_date` date,
-		`appt_start_time` time,
-		`appt_end_time` time,
+		`appointment_date` date,
+		`appointment_start_time` time,
+		`appointment_end_time` time,
 		`date_created` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 		PRIMARY KEY (`id`)
 		) ENGINE=InnoDB;
