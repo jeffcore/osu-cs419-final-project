@@ -41,7 +41,7 @@ def get_appointments_list(cnx):
     cursor = cnx.cursor()
     query = (
         "SELECT id, student_name, appointment_date,appointment_start_time,appointment_end_time,"  
-        "advisor_name, advisor_email, student_email FROM appointment"
+        "advisor_name, advisor_email, student_email FROM " + db_funcs.get_table_name()
     ) 
     cursor.execute(query)
     data = cursor.fetchall()       
