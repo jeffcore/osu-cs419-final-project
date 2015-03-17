@@ -12,7 +12,7 @@ from db_funcs import view_appt, add_appt, drop_appt, ...
 
 from sql_cmd import execute
 
-DEFAULT_TABLE = "'appointment'"
+DEFAULT_TABLE = 'appointment'
 
 def get_table_name():
 	return DEFAULT_TABLE
