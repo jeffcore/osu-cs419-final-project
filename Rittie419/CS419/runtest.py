@@ -11,29 +11,30 @@ from procfilter import return_date
 import os
 from datetime import datetime
 from testtools import get_plaintext_add_appt, get_plaintext_drop_appt
-def main(add_drop):
-	#procfilter_tests()
+def main(args):
+	if args.count('procfilter')==1:
+		procfilter_tests()
 	#calendar_tests()
 
-	if add_drop:
-		if add_drop == 'add':
-			a1 = 1
-			a2 = 1
-			a3 = 1
-			a4 = 1
-			d1 = 0
-			d2 = 0
-			d3 = 0
-			d4 = 0
-		elif add_drop == 'drop':
-			a1 = 0
-			a2 = 0
-			a3 = 0
-			a4 = 0
-			d1 = 1
-			d2 = 1
-			d3 = 1
-			d4 = 1
+	if args.count('add')==1:
+		a1 = 1
+		a2 = 1
+		a3 = 1
+		a4 = 1
+		d1 = 0
+		d2 = 0
+		d3 = 0
+		d4 = 0
+		add_drop_appt_tests(a1,a2,a3,a4,d1,d2,d3,d4)
+	elif args.count('drop')==1:
+		a1 = 0
+		a2 = 0
+		a3 = 0
+		a4 = 0
+		d1 = 1
+		d2 = 1
+		d3 = 1
+		d4 = 1
 		add_drop_appt_tests(a1,a2,a3,a4,d1,d2,d3,d4)
 
 def procfilter_tests():
@@ -518,8 +519,8 @@ else:
 if __name__ == "__main__":
 
 	print sys.argv, len(sys.argv)
-	if len(sys.argv)==2:
-		main(sys.argv[1])
+	if len(sys.argv)>1:
+		main(sys.argv[1:])
 	else:
 		main(False)
 
