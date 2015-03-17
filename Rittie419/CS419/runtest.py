@@ -1,3 +1,4 @@
+import sys
 from db_funcs import view_appt, add_appt, drop_appt, new_table, drop_table
 from db_funcs import is_repeat, get_unique_id
 
@@ -10,9 +11,30 @@ from procfilter import return_date
 import os
 from datetime import datetime
 from testtools import get_plaintext_add_appt, get_plaintext_drop_appt
-def main():
-	procfilter_tests()
+def main(add_drop):
+	#procfilter_tests()
 	#calendar_tests()
+
+	if add_drop:
+		if add_drop == 'add':
+			a1 = 1
+			a2 = 1
+			a3 = 1
+			a4 = 1
+			d1 = 0
+			d2 = 0
+			d3 = 0
+			d4 = 0
+		elif add_drop == 'drop':
+			a1 = 0
+			a2 = 0
+			a3 = 0
+			a4 = 0
+			d1 = 1
+			d2 = 1
+			d3 = 1
+			d4 = 1
+		add_drop_appt_tests(a1,a2,a3,a4,d1,d2,d3,d4)
 
 def procfilter_tests():
 	#####-----<PROC FILTER TESTS>-----------------#####
@@ -293,56 +315,75 @@ def procfilter_tests():
 	#print 'PASSED: procfiltertest #%d: %s' % (currtestnum, currtest)
 
 	print "DONE"
+
+def add_drop_appt_tests(a1=0,a2=0,a3=0,a4=0,d1=0,d2=0,d3=0,d4=0):
 	###------<USER STORY TESTS>-----------###
 	#add_appt.main()
-	'''
-	add_appt.main('Advisor Rittie2', 
-		'chuaprar@engr.orst.edu', 
-		'Student Rittie2',
-		'rittie@alumni-gsb.stanford.edu',
-		datetime(2015,3,10,13,30),
-		datetime(2015,3,10,14,45))
-	'''
-	'''
-	drop_appt.main('Advisor Rittie2', 
-		'chuaprar@engr.orst.edu', 
-		'Student Rittie2',
-		'rittie@alumni-gsb.stanford.edu',
-		datetime(2015,3,10,13,30),
-		datetime(2015,3,10,14,45))
-	'''
-	'''
-	add_appt.main('Advisor Rittie', 
-		'chuaprar@engr.orst.edu', 
-		'Student Rittie',
-		'rac42@cornell.edu',
-		datetime(2015,3,10,10,30),
-		datetime(2015,3,10,11,45))
-	'''
-	'''
-	drop_appt.main('Advisor Rittie', 
-		'chuaprar@engr.orst.edu', 
-		'Student Rittie',
-		'rac42@cornell.edu',
-		datetime(2015,3,10,10,30),
-		datetime(2015,3,10,11,45))
-	'''
-	'''
-	add_appt.main('Advisor Rittie', 
-		'chuaprar@engr.orst.edu', 
-		'Student 3',
-		'rac42@cornell.edu',
-		datetime(2015,3,11,10,30),
-		datetime(2015,3,11,11,45))
-	'''
-	'''
-	drop_appt.main('Advisor Rittie', 
-		'chuaprar@engr.orst.edu', 
-		'Student 3',
-		'rac42@cornell.edu',
-		datetime(2015,3,11,10,30),
-		datetime(2015,3,11,11,45))
-	'''
+	
+	if a1:
+		add_appt.main('Advisor Rittie', 
+			'chuaprar@engr.orst.edu', 
+			'Student Rittie',
+			'rac42@cornell.edu',
+			datetime(2015,3,10,10,30),
+			datetime(2015,3,10,11,45))
+	
+	if d1:
+		drop_appt.main('Advisor Rittie', 
+			'chuaprar@engr.orst.edu', 
+			'Student Rittie',
+			'rac42@cornell.edu',
+			datetime(2015,3,10,10,30),
+			datetime(2015,3,10,11,45))
+	
+	if a2:
+		add_appt.main('Advisor Rittie2', 
+			'chuaprar@engr.orst.edu', 
+			'Student Rittie2',
+			'rittie@alumni-gsb.stanford.edu',
+			datetime(2015,3,10,13,30),
+			datetime(2015,3,10,14,45))
+	
+	if d2:
+		drop_appt.main('Advisor Rittie2', 
+			'chuaprar@engr.orst.edu', 
+			'Student Rittie2',
+			'rittie@alumni-gsb.stanford.edu',
+			datetime(2015,3,10,13,30),
+			datetime(2015,3,10,14,45))
+	
+	if a3:
+		add_appt.main('Advisor Rittie', 
+			'chuaprar@engr.orst.edu', 
+			'Student 3',
+			'rac42@cornell.edu',
+			datetime(2015,3,11,10,30),
+			datetime(2015,3,11,11,45))
+	
+	if d3:
+		drop_appt.main('Advisor Rittie', 
+			'chuaprar@engr.orst.edu', 
+			'Student 3',
+			'rac42@cornell.edu',
+			datetime(2015,3,11,10,30),
+			datetime(2015,3,11,11,45))
+	
+	if a4:
+		add_appt.main('Advisor Rittie', 
+			'chuaprar@engr.orst.edu', 
+			'Student 4',
+			'rac42@cornell.edu',
+			datetime(2015,3,12,9,30),
+			datetime(2015,3,12,9,45))
+	
+	if d4:
+		drop_appt.main('Advisor Rittie', 
+			'chuaprar@engr.orst.edu', 
+			'Student 4',
+			'rac42@cornell.edu',
+			datetime(2015,3,12,9,30),
+			datetime(2015,3,12,9,45))
+	
 	pass
 
 from procfilter import get_day_num
@@ -476,5 +517,9 @@ else:
 
 if __name__ == "__main__":
 
-	main()
+	print sys.argv, len(sys.argv)
+	if len(sys.argv)==2:
+		main(sys.argv[1])
+	else:
+		main(False)
 
