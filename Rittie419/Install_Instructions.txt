@@ -1,8 +1,3 @@
----Non-Installation Portion, just for replication---
-* Added the CS419 folder and contents and launcher.py to my main directory
-* command: tar -jcvf group8_project.tar.bz2 CS419 launcher.py
-
-
 ======Installation=============
 1. The tar.bz2 file needs to be placed in the user's main directory
 2. The user will enter command "tar -jxvf group8_project.tar.bz2"

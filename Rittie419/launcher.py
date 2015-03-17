@@ -52,7 +52,7 @@ while running:
 			
 		if os.path.isfile(forward_file):
 			print"\n**********.forward Message**********"
-			print "Your main directory contains a .forward file.\nThis will interfere with the advising system.\The file should be removed.\nThis can be completed using TEACH or manually removing the file from the directory."
+			print "Your main directory contains a .forward file.\nThis will interfere with the advising system.\nThe file should be removed.\nThis can be completed using TEACH or manually removing the file from the directory."
 			
 	elif menu_selection == '2':
 		if os.path.isfile(procfile):
