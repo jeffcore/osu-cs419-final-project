@@ -155,12 +155,13 @@ def handle_add(msg):
 	print '\t\t------------------------------'
 
 	# update database with new appointment
-	db_funcs.add_appt(db_adv, db_stud,
+	no_repeat = db_funcs.add_appt(db_adv, db_stud,
 		db_adv_email, db_stud_email, db_date, db_start, db_end)
 
 	# send Outlook calendar invite to advisor
-	add_calendar.add_calendar(db_adv, db_stud,
-		db_adv_email, db_stud_email, dt_start, dt_end, uid)
+	if no_repeat:	
+		add_calendar.add_calendar(db_adv, db_stud,
+			db_adv_email, db_stud_email, dt_start, dt_end, uid)
 
 	# send confirmation email to student - NOT APPLICABLE
 	#send_conf_email.main(db_adv, db_stud, db_stud_email, 
