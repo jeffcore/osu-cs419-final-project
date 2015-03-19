@@ -348,7 +348,8 @@ def main():
                         #f = open('error.txt', 'w')
                         #f.write(str(inst)) 
                         #f.close()
-                        # stdscr.deleteln()                   
+                        #stdscr.deleteln()  
+						pass
                 if input == "^":
 					easter(stdscr,scrsize[0])                  
             else:
