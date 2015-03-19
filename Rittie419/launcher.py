@@ -15,6 +15,7 @@ procfile = ".procmailrc"
 forward_file = ".forward"
 menu_selection = 0
 running = True
+get_forward = True
 
 while running:
 	print "\nWelcome to Group 8's Advising System Project!"
@@ -40,7 +41,13 @@ while running:
 			print "**********.procmailrc Message**********"
 			print "Creating the required .procmailrc file..."
 			
-			userEmail = raw_input("Enter an email for forwarding: ")
+			while get_forward:
+				userEmail = raw_input("Enter an email for forwarding: ")
+				print "You entered: " + userEmail
+				answer = raw_input("Is that correct? 1 = Yes, 2 = No: ")
+				if answer == "1":
+					get_forward = False
+			
 			f = open('.procmailrc','w+')
 			f.write("# A default .procmailrc file\n# See http://engr.oregonstate.edu/computing/email/90\n\n# Include the standard spam filter\nINCLUDERC=/usr/local/etc/procmail/standard.rc\n\n:0 fW:\n* ^From[: ].*do.not.reply@engr.orst.edu\n* ^Subject:.*Advising Signup\n| python ~/CS419/procfilter.py\n\n:0\n* ^From[: ].*do.not.reply@engr.orst.edu\n* ^Subject:.*Advising Signup\n/dev/null\n\n" + "# for other mail, forward everything\n:0\n* ^[a-zA-Z]+\n! " + userEmail)
 			f.close()
