@@ -308,9 +308,9 @@ def main():
                             handle_drop(appointment)       
                             appt_selected = 1                       
                     except Exception as inst:                                             
-                        f = open('error.txt', 'w')
-                        f.write(str(inst)) 
-                        f.close()
+                        #f = open('error.txt', 'w')
+                        #f.write(str(inst)) 
+                        #f.close()
                         # stdscr.deleteln()                   
             else:
                 break
