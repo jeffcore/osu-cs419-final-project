@@ -156,6 +156,9 @@ def get_appointment_number(stdscr, line_start_action_input, appt_selected):
         elif event == ord("r") or event == ord("R"): 
             input = chr(event)  
             break            
+        elif event == ord("^"): 
+            input = chr(event)  
+            break            
         elif event == 10:
             break           
         elif event == curses.KEY_DOWN:            
@@ -165,6 +168,40 @@ def get_appointment_number(stdscr, line_start_action_input, appt_selected):
             appt_selected -= 1
             break  
     return input, appt_selected, quit
+
+import ty
+def easter(stdscr, screen_y):
+    # set highlight and normal colors
+    curses.start_color()
+    curses.init_pair(1,curses.COLOR_RED, curses.COLOR_WHITE)  # set colors for highlight
+    h = curses.color_pair(1)   # highlight colors
+    n = curses.A_NORMAL        # normal colors
+    
+    selected = 1    
+    window_x = 41
+    window_y = 6
+    # create popup window
+    window = curses.newwin(window_y,window_x,screen_y/2-window_y/2,19)
+    window.addstr(1, 1, ty.main(), n)
+    window.keypad(1) 
+    window.addstr(4, 10, "<Enter> to continue", h)
+    #window.addstr(3, window_x/2-3, "No", n)
+    curses.curs_set(0)
+    window.box()
+    #create panel for box put panel on top of screen
+    panel1 = curses.panel.new_panel(window)        
+    panel1.top(); 
+    curses.panel.update_panels() 
+    stdscr.refresh() 
+    
+    
+    # loop for selection and to get user decision
+    while True:
+        event = window.getch()
+        if event == 10:          
+            break   
+
+    return
 
 # Verification popup before deletion of an appointment #   
 # @param  screen
@@ -312,6 +349,8 @@ def main():
                         #f.write(str(inst)) 
                         #f.close()
                         # stdscr.deleteln()                   
+                if input == "^":
+					easter(stdscr,scrsize[0])                  
             else:
                 break
         
